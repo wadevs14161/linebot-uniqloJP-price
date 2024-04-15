@@ -130,6 +130,41 @@ def product_crawl(serial_number):
                 size = "4XL"
             elif size_code == 10:
                 size = "5XL"
+            elif size_code == 100:
+                size = "100"
+            elif size_code == 110:
+                size = "110"
+            elif size_code == 120:
+                size = "120"
+            elif size_code == 130:
+                size = "130"
+            elif size_code == 140:
+                size = "140"
+            elif size_code == 150:
+                size = "150"
+            elif size_code == 160:
+                size = "160"
+            elif size_code == 499:
+                size = "AA 65/70"
+            elif size_code == 500:
+                size = "AB 65/70"
+            elif size_code == 501:
+                size = "CD 65/70"
+            elif size_code == 502:
+                size = "EF 65/70"
+            elif size_code == 503:
+                size = "AB 75/80"
+            elif size_code == 504:
+                size = "CD 75/80"
+            elif size_code == 505:
+                size = "EF 75/80"
+            elif size_code == 506:
+                size = "AB 85/90"
+            elif size_code == 507:
+                size = "CD 85/90"
+            elif size_code == 508:
+                size = "EF 85/90"
+
 
             product_dict['size'] = size
 
