@@ -22,6 +22,7 @@ from linebot.v3.messaging import (
 )
 
 from crawl import product_crawl
+from image import analyze
 
 app = Flask(__name__)
 
@@ -41,15 +42,24 @@ configuration = Configuration(
     access_token=channel_access_token
 )
 
+
 @app.route('/')
 def index():
-   print('Request for index page received')
-   return render_template('index.html')
+   
+    result = analyze()
+    context = {
+        'caption': result.caption,
+        'read': result.read,
+    }
+    
+    return render_template('index.html', context=context)
+
 
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 
 @app.route('/hello', methods=['POST'])
 def hello():
@@ -61,7 +71,8 @@ def hello():
    else:
        print('Request for hello page received with no name or blank name -- redirecting')
        return redirect(url_for('index'))
-   
+
+
 @app.route("/callback", methods=['POST'])
 def callback():
     signature = request.headers['X-Line-Signature']
