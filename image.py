@@ -5,7 +5,7 @@ from azure.core.credentials import AzureKeyCredential
 
 # Set the values of your computer vision endpoint and computer vision key
 # as environment variables:
-def analyze():
+def analyze(url):
     try:
         endpoint = os.environ["VISION_ENDPOINT"]
         key = os.environ["VISION_KEY"]
@@ -19,10 +19,13 @@ def analyze():
         endpoint=endpoint,
         credential=AzureKeyCredential(key)
     )
-
+    if url:
+        image_url = url
+    else:
+        image_url = "https://www.visa.com.tw/dam/VCOM/regional/ap/taiwan/global-elements/images/tw-visa-gold-card-498x280.png"
     # Get a caption for the image. This will be a synchronously (blocking) call.
     result = client.analyze_from_url(
-        image_url="https://www.visa.com.tw/dam/VCOM/regional/ap/taiwan/global-elements/images/tw-visa-gold-card-498x280.png",
+        image_url=image_url,
         visual_features=[VisualFeatures.CAPTION, VisualFeatures.READ],
         gender_neutral_caption=True,  # Optional (default is False)
     )

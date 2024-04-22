@@ -14,23 +14,26 @@
             <h1 class="display-6 fw-bold text-primary">TEST OCR</h1>            
         </div>
         <div>
-          <div class="grid grid-cols-3 m-6 p-6">
+          <div class="grid grid-cols-4 m-6 p-6">
             <div class="m-6 p-6">
-              <span class="text-lg">UPLOAD IMAGE</span>
-              <form>
-                <input type="url">
-                <button type="submit">Submit</button>
-              </form>
+              <span class="text-lg">IMAGE URL</span>
+              <form method="post">
+                <input type="url" name="url" class="border-2 rounded-md"> 
+                <input type="submit" value="Submit"> 
+              </form> 
             </div>
+            {% if context %}
             <div class="m-6 p-6">
               <h1 class="text-lg semibold">Response from OCR</h1>
               <span>Caption:</span>
               <p>{{ context.caption.text }}</p>
-              <span>Caption:</span>
+              <span>Caption confidence:</span>
               <p>{{ context.caption.confidence }}</p>
+              <span>Serial number:</span>
+              <p>{{ context.serial }}</p>
             </div>
             <div class="m-6 p-6">
-              3
+              3333
             </div>
           </div>
           <div class="grid grid-cols-2 gap-4 m-6 p-6">
@@ -38,17 +41,13 @@
               <div class="p-3">
               {% for line in context.read.blocks[0].lines %}
                 <span>Line: </span><span>{{ line.text }}</span><br>
-                <span>Bounding box: </span><span>{{ line.bounding_polygon }}</span><br>
-                {% for word in line.words %}
-                  <span>Word: </span><span>{{ word.text }}</span><br>
-                  <span>Bounding polygon: </span><span>{{ word.bounding_polygon }}</span><br>
-                  <span>Confidence: </span><span>{{ word.confidence }}</span><br>
-                {% endfor %}
                 <span>----------------------------------</span><br>
               {% endfor %}
               </div>
             </div>
-            <div class="border-4 rounded-md">22222
+            {% endif %}
+            <div class="border-4 rounded-md">
+              <img src="{{ context.url }}" alt="Input image" referrerpolicy="no-referrer">
             </div>
           </div>
         </div>

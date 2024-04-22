@@ -43,16 +43,30 @@ configuration = Configuration(
 )
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-   
-    result = analyze()
-    context = {
-        'caption': result.caption,
-        'read': result.read,
-    }
-    
-    return render_template('index.html', context=context)
+    if request.method == 'POST':
+        url = request.form['url']
+        result = analyze(url)
+        serial_number = ""
+        for line in result.read.blocks[0].lines:
+            if len(line.text) == 10:
+                if line.text[-6:].isnumeric():
+                    serial_number = line.text[-6:]
+                    print(serial_number)
+        context = {
+            'caption': result.caption,
+            'read': result.read,
+            'serial': serial_number,
+            'url': url,
+        }
+        return render_template('index.html', context=context)
+    else:
+        return render_template('index.html')
+
+# @app.route('/', methods=['POST'])
+# def index():
+#     pass
 
 
 @app.route('/favicon.ico')
