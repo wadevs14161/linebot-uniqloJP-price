@@ -3,7 +3,8 @@ import sys
 from flask import (Flask, redirect, render_template, request,
                    send_from_directory, url_for, abort)
 from linebot import (
-    WebhookParser
+    WebhookParser,
+    WebhookHandler
 )
 from linebot.v3.exceptions import (
     InvalidSignatureError
@@ -11,6 +12,7 @@ from linebot.v3.exceptions import (
 from linebot.v3.webhooks import (
     MessageEvent,
     TextMessageContent,
+    ImageMessageContent
 )
 from linebot.v3.messaging import (
     Configuration,
