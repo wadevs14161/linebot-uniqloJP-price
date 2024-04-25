@@ -4,7 +4,7 @@ import requests
 import shutil
 from flask import (Flask, redirect, render_template, request,
                    send_from_directory, url_for, abort)
-from linebot import (
+from linebot.v3 import (
     WebhookParser,
     WebhookHandler
 )
