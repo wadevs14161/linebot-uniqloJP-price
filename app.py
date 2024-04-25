@@ -1,5 +1,7 @@
 import os
 import sys
+import requests
+import shutil
 from flask import (Flask, redirect, render_template, request,
                    send_from_directory, url_for, abort)
 from linebot import (
@@ -26,6 +28,16 @@ from linebot.v3.messaging import (
 from crawl import product_crawl
 from image import analyze
 
+# Cloudinary API
+import cloudinary
+import cloudinary.uploader
+          
+cloudinary.config( 
+  cloud_name = os.getenv('CLOUDINARY_NAME'), 
+  api_key = os.getenv('CLOUDINARY_API_KEY'), 
+  api_secret = os.getenv('CLOUDINARY_API_SECRET') 
+)
+
 app = Flask(__name__)
 
 # get channel_secret and channel_access_token from your environment variable
@@ -39,6 +51,7 @@ if channel_access_token is None:
     sys.exit(1)
 
 parser = WebhookParser(channel_secret)
+handler = WebhookHandler(channel_secret)
 
 configuration = Configuration(
     access_token=channel_access_token
@@ -65,16 +78,6 @@ def index():
         return render_template('index.html', context=context)
     else:
         return render_template('index.html')
-
-# @app.route('/', methods=['POST'])
-# def index():
-#     pass
-
-
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 @app.route('/hello', methods=['POST'])
@@ -124,63 +127,106 @@ def find_product():
     app.logger.info("Request body: " + body)
 
     # parse webhook body
-    # try:
-    events = parser.parse(body, signature)
-    # except InvalidSignatureError:
-    #     abort(400)
+    try:
+        events = parser.parse(body, signature)
+    except InvalidSignatureError:
+        abort(400)
 
-    for event in events:
-        with ApiClient(configuration) as api_client:
-            line_bot_api = MessagingApi(api_client)
-            message_input = event.message.text
-            if message_input == "1":
-                img_url = "https://i.imgur.com/HLw9BhO.jpg"
-                reply = ImageMessage(original_content_url=img_url, preview_image_url=img_url)
-                line_bot_api.reply_message(
-                    ReplyMessageRequest(
-                    replyToken=event.reply_token,
-                    messages=[reply]))
-                break
-
-            result = product_crawl(message_input)
-            # result = crawl(message_input)
-            if result == -1:
-                reply1 = "商品不存在日本Uniqlo哦! (期間限定價格商品可能找不到)"
-                reply2 = "請重新輸入或按 1 看範例~"
-                line_bot_api.reply_message_with_http_info(
-                    ReplyMessageRequest(
-                    replyToken=event.reply_token, 
-                    messages=[TextMessage(text=reply1),
-                              TextMessage(text=reply2)]))
-            else:
-                reply1 = "商品連結:\n %s\n商品價格: %s日圓\n折合台幣: %s元" % (result[1], result[2], result[3])
-                # reply1 = "商品連結:\n %s\n商品價格: %s日圓\n折合台幣: %s元\n臺灣官網售價: %s元" % (result[1], result[2], result[3], result[4][2])
-                if len(result[4]) != 0:
-                    try:
-                        reply1 += "\n臺灣官網售價: {}元".format(result[4][2])
-                    except:
-                        reply1 += "\n臺灣官網售價: {}元".format(result[4][1])
-                available_dict = {}
-                if len(result) == 6:
-                    for item in result[5]:
-                        if item['stock'] != 'STOCK_OUT' and item['color'] not in available_dict:
-                            available_dict[item['color']] = []
-                        if item['stock'] != 'STOCK_OUT' and item['color'] in available_dict:
-                            available_dict[item['color']].append(item['size'])
-
-                    reply2 = "日本官網庫存:"
-                    for color in available_dict:
-                        reply2 += "\n{}: ".format(color)
-                        reply2 += "{}".format(', '.join(available_dict[color]))
-                else:
-                    reply2 = "日本官網庫存查不到"
-
-                line_bot_api.reply_message_with_http_info(
-                    ReplyMessageRequest(
-                    replyToken=event.reply_token, 
-                    messages=[TextMessage(text=reply1),
-                              TextMessage(text=reply2)]))        
     return 'OK'
+
+@handler.add(MessageEvent, message=TextMessageContent)
+def message_text(event):
+# for event in events:
+    with ApiClient(configuration) as api_client:
+        line_bot_api = MessagingApi(api_client)
+        message_input = event.message.text
+        if message_input == "1":
+            img_url = "https://i.imgur.com/HLw9BhO.jpg"
+            reply = ImageMessage(original_content_url=img_url, preview_image_url=img_url)
+            line_bot_api.reply_message(
+                ReplyMessageRequest(
+                replyToken=event.reply_token,
+                messages=[reply]))
+
+        result = product_crawl(message_input)
+        # result = crawl(message_input)
+        if result == -1:
+            reply1 = "商品不存在日本Uniqlo哦! (期間限定價格商品可能找不到)"
+            reply2 = "請重新輸入或按 1 看範例~"
+            line_bot_api.reply_message_with_http_info(
+                ReplyMessageRequest(
+                replyToken=event.reply_token, 
+                messages=[TextMessage(text=reply1),
+                            TextMessage(text=reply2)]))
+        else:
+            reply1 = "商品連結:\n %s\n商品價格: %s日圓\n折合台幣: %s元" % (result[1], result[2], result[3])
+            # reply1 = "商品連結:\n %s\n商品價格: %s日圓\n折合台幣: %s元\n臺灣官網售價: %s元" % (result[1], result[2], result[3], result[4][2])
+            if len(result[4]) != 0:
+                try:
+                    reply1 += "\n臺灣官網售價: {}元".format(result[4][2])
+                except:
+                    reply1 += "\n臺灣官網售價: {}元".format(result[4][1])
+            available_dict = {}
+            if len(result) == 6:
+                for item in result[5]:
+                    if item['stock'] != 'STOCK_OUT' and item['color'] not in available_dict:
+                        available_dict[item['color']] = []
+                    if item['stock'] != 'STOCK_OUT' and item['color'] in available_dict:
+                        available_dict[item['color']].append(item['size'])
+
+                reply2 = "日本官網庫存:"
+                for color in available_dict:
+                    reply2 += "\n{}: ".format(color)
+                    reply2 += "{}".format(', '.join(available_dict[color]))
+            else:
+                reply2 = "日本官網庫存查不到"
+
+            line_bot_api.reply_message_with_http_info(
+                ReplyMessageRequest(
+                replyToken=event.reply_token, 
+                messages=[TextMessage(text=reply1),
+                            TextMessage(text=reply2)]))        
+    return 'OK'
+
+@handler.add(MessageEvent, message=ImageMessageContent)
+def message_image(event):
+    with ApiClient(configuration) as api_client:
+        reply1 = 'You sent a image!!! (TESTING RECOGNITION SERVICE)'
+
+        line_bot_api = MessagingApi(api_client)
+
+        messageId = event.message.id
+
+        url = "https://api-data.line.me/v2/bot/message/{}/content".format(messageId)
+        headers = {"Authorization": "Bearer {}".format(channel_access_token)}
+        r = requests.get(url, headers=headers, stream=True)
+        print(r)
+        
+        filename = "test.jpg"
+        if r.status_code == 200:
+            with open(f'{filename}', "wb") as file:
+                shutil.copyfileobj(r.raw, file)
+                print("Image downloaded successfully.")
+        
+        print(os.listdir())
+        os.listdir()
+
+        cloudinary_response = cloudinary.uploader.upload('test.jpg')
+        print("Uploading image... ")
+
+        result = analyze(cloudinary_response['url'])
+        print(result)
+        reply4 = result.caption.text
+
+        line_bot_api.reply_message(
+            ReplyMessageRequest(
+                reply_token=event.reply_token,
+                messages=[
+                    TextMessage(text=reply1),
+                    TextMessage(text=reply4)
+                ]
+            )
+        )
 
 if __name__ == '__main__':
    app.run()
