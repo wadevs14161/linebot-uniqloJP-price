@@ -184,7 +184,6 @@ def message_image(event):
                     print("serial number : " + serial_number)
         crawlResult = product_crawl(serial_number)
         reply1 = "商品連結:\n %s\n商品價格: %s日圓\n折合台幣: %s元" % (crawlResult[1], crawlResult[2], crawlResult[3])
-            # reply1 = "商品連結:\n %s\n商品價格: %s日圓\n折合台幣: %s元\n臺灣官網售價: %s元" % (result[1], result[2], result[3], result[4][2])
         if len(crawlResult[4]) != 0:
             try:
                 reply1 += "\n臺灣官網售價: {}元".format(crawlResult[4][2])
@@ -192,7 +191,7 @@ def message_image(event):
                 reply1 += "\n臺灣官網售價: {}元".format(crawlResult[4][1])
         available_dict = {}
         if len(crawlResult) == 6:
-            for item in result[5]:
+            for item in crawlResult[5]:
                 if item['stock'] != 'STOCK_OUT' and item['color'] not in available_dict:
                     available_dict[item['color']] = []
                 if item['stock'] != 'STOCK_OUT' and item['color'] in available_dict:
