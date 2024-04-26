@@ -2,6 +2,7 @@ import os
 import sys
 import requests
 import shutil
+from argparse import ArgumentParser
 from flask import (Flask, redirect, render_template, request,
                    send_from_directory, url_for, abort)
 from linebot.v3 import (
@@ -213,4 +214,11 @@ def message_image(event):
     return "OK"
 
 if __name__ == '__main__':
-   app.run()
+    arg_parser = ArgumentParser(
+        usage='Usage: python ' + __file__ + ' [--port <port>] [--help]'
+    )
+    arg_parser.add_argument('-p', '--port', type=int, default=8000, help='port')
+    arg_parser.add_argument('-d', '--debug', default=False, help='debug')
+    options = arg_parser.parse_args()
+
+    app.run(debug=options.debug, port=options.port)
