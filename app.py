@@ -117,6 +117,7 @@ def message_text(event):
 @handler.add(MessageEvent, message=ImageMessageContent)
 def message_image(event):
     with ApiClient(configuration) as api_client:
+        print("User sent a image!")
         line_bot_api = MessagingApi(api_client)
         messageId = event.message.id
         image_url = upload_image(channel_access_token, messageId)
@@ -131,12 +132,6 @@ def message_image(event):
                     print("serial number : " + serial_number)
 
         crawlResult = product_crawl(serial_number)
-
-        image_check = '你傳了一張圖片!'
-        line_bot_api.reply_message_with_http_info(
-            ReplyMessageRequest(
-            replyToken=event.reply_token, 
-            messages=[TextMessage(text=image_check)]))
         
         reply_message(crawlResult, event, line_bot_api)
 
