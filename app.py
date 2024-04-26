@@ -210,7 +210,7 @@ def message_image(event):
             messages=[TextMessage(text=reply3),
                       TextMessage(text=reply1),
                       TextMessage(text=reply2)]))
-
+    return "OK"
 
 if __name__ == '__main__':
    app.run()
