@@ -1,10 +1,7 @@
 import os
 import sys
-import requests
-import shutil
 from argparse import ArgumentParser
-from flask import (Flask, redirect, render_template, request,
-                   send_from_directory, url_for, abort)
+from flask import (Flask, render_template, request, abort)
 from linebot.v3 import (
     WebhookParser,
     WebhookHandler
@@ -28,6 +25,7 @@ from linebot.v3.messaging import (
 
 from crawl import product_crawl
 from reply import reply_message
+from upload import upload_image
 from image import analyze
 
 # Cloudinary API
@@ -119,28 +117,11 @@ def message_text(event):
 @handler.add(MessageEvent, message=ImageMessageContent)
 def message_image(event):
     with ApiClient(configuration) as api_client:
-        reply3 = '你傳了一張圖片!'
-
         line_bot_api = MessagingApi(api_client)
-
         messageId = event.message.id
+        image_url = upload_image(channel_access_token, messageId)
 
-        url = "https://api-data.line.me/v2/bot/message/{}/content".format(messageId)
-        headers = {"Authorization": "Bearer {}".format(channel_access_token)}
-        r = requests.get(url, headers=headers, stream=True)
-        
-        filename = "test.jpg"
-        if r.status_code == 200:
-            with open(f'{filename}', "wb") as file:
-                shutil.copyfileobj(r.raw, file)
-                print("Image downloaded successfully.")
-        
-        os.listdir()
-
-        cloudinary_response = cloudinary.uploader.upload('test.jpg')
-        print("Uploading image... ")
-
-        result = analyze(cloudinary_response['url'])
+        result = analyze(image_url)
 
         serial_number = ""
         for line in result.read.blocks[0].lines:
@@ -148,34 +129,17 @@ def message_image(event):
                 if line.text[-6:].isnumeric():
                     serial_number = line.text[-6:]
                     print("serial number : " + serial_number)
+
         crawlResult = product_crawl(serial_number)
-        reply1 = "商品連結:\n %s\n商品價格: %s日圓\n折合台幣: %s元" % (crawlResult[1], crawlResult[2], crawlResult[3])
-        if len(crawlResult[4]) != 0:
-            try:
-                reply1 += "\n臺灣官網售價: {}元".format(crawlResult[4][2])
-            except:
-                reply1 += "\n臺灣官網售價: {}元".format(crawlResult[4][1])
-        available_dict = {}
-        if len(crawlResult) == 6:
-            for item in crawlResult[5]:
-                if item['stock'] != 'STOCK_OUT' and item['color'] not in available_dict:
-                    available_dict[item['color']] = []
-                if item['stock'] != 'STOCK_OUT' and item['color'] in available_dict:
-                    available_dict[item['color']].append(item['size'])
 
-            reply2 = "日本官網庫存:"
-            for color in available_dict:
-                reply2 += "\n{}: ".format(color)
-                reply2 += "{}".format(', '.join(available_dict[color]))
-        else:
-            reply2 = "日本官網庫存查不到"
-
+        image_check = '你傳了一張圖片!'
         line_bot_api.reply_message_with_http_info(
             ReplyMessageRequest(
             replyToken=event.reply_token, 
-            messages=[TextMessage(text=reply3),
-                      TextMessage(text=reply1),
-                      TextMessage(text=reply2)]))
+            messages=[TextMessage(text=image_check)]))
+        
+        reply_message(crawlResult, event, line_bot_api)
+
     return "OK"
 
 if __name__ == '__main__':
