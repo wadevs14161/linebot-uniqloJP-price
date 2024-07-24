@@ -1,6 +1,5 @@
 import os
 import sys
-from argparse import ArgumentParser
 from flask import (Flask, render_template, request, abort)
 from linebot.v3 import (
     WebhookParser,
@@ -25,18 +24,7 @@ from linebot.v3.messaging import (
 
 from crawl import product_crawl
 from reply import reply_message
-from upload import upload_image
-from image import analyze
 
-# Cloudinary API
-import cloudinary
-import cloudinary.uploader
-          
-cloudinary.config( 
-  cloud_name = os.getenv('CLOUDINARY_NAME'), 
-  api_key = os.getenv('CLOUDINARY_API_KEY'), 
-  api_secret = os.getenv('CLOUDINARY_API_SECRET') 
-)
 
 app = Flask(__name__)
 
@@ -60,24 +48,7 @@ configuration = Configuration(
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method == 'POST':
-        url = request.form['url']
-        result = analyze(url)
-        serial_number = ""
-        for line in result.read.blocks[0].lines:
-            if len(line.text) == 10:
-                if line.text[-6:].isnumeric():
-                    serial_number = line.text[-6:]
-                    print(serial_number)
-        context = {
-            'caption': result.caption,
-            'read': result.read,
-            'serial': serial_number,
-            'url': url,
-        }
-        return render_template('index.html', context=context)
-    else:
-        return render_template('index.html')
+    return "Linebot root page!"
 
 
 @app.route("/find_product", methods=['POST'])
@@ -102,6 +73,7 @@ def message_text(event):
     with ApiClient(configuration) as api_client:
         line_bot_api = MessagingApi(api_client)
         if message_input == "1":
+            print("User ask for example!")
             img_url = "https://i.imgur.com/HLw9BhO.jpg"
             reply = ImageMessage(original_content_url=img_url, preview_image_url=img_url)
             line_bot_api.reply_message(
@@ -109,40 +81,35 @@ def message_text(event):
                 replyToken=event.reply_token,
                 messages=[reply]))
         else:
+            print("Start crawling!")
             result = product_crawl(message_input)
             reply_message(result, event, line_bot_api)
                     
     return 'OK'
 
-@handler.add(MessageEvent, message=ImageMessageContent)
-def message_image(event):
-    with ApiClient(configuration) as api_client:
-        print("User sent a image!")
-        line_bot_api = MessagingApi(api_client)
-        messageId = event.message.id
-        image_url = upload_image(channel_access_token, messageId)
+# @handler.add(MessageEvent, message=ImageMessageContent)
+# def message_image(event):
+#     with ApiClient(configuration) as api_client:
+#         print("User sent a image!")
+#         line_bot_api = MessagingApi(api_client)
+#         messageId = event.message.id
+#         image_url = upload_image(channel_access_token, messageId)
 
-        result = analyze(image_url)
+#         result = analyze(image_url)
 
-        serial_number = ""
-        for line in result.read.blocks[0].lines:
-            if len(line.text) == 10:
-                if line.text[-6:].isnumeric():
-                    serial_number = line.text[-6:]
-                    print("serial number : " + serial_number)
+#         serial_number = ""
+#         for line in result.read.blocks[0].lines:
+#             if len(line.text) == 10:
+#                 if line.text[-6:].isnumeric():
+#                     serial_number = line.text[-6:]
+#                     print("serial number : " + serial_number)
 
-        crawlResult = product_crawl(serial_number)
+#         crawlResult = product_crawl(serial_number)
         
-        reply_message(crawlResult, event, line_bot_api)
+#         reply_message(crawlResult, event, line_bot_api)
 
-    return "OK"
+#     return "OK"
 
 if __name__ == '__main__':
-    arg_parser = ArgumentParser(
-        usage='Usage: python ' + __file__ + ' [--port <port>] [--help]'
-    )
-    arg_parser.add_argument('-p', '--port', type=int, default=8000, help='port')
-    arg_parser.add_argument('-d', '--debug', default=False, help='debug')
-    options = arg_parser.parse_args()
-
-    app.run(debug=options.debug, port=options.port)
+    
+    app.run(debug=True)

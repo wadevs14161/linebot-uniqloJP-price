@@ -2,8 +2,19 @@ import requests
 from bs4 import BeautifulSoup
 
 def product_crawl(serial_number):
+    # Return format
+    product_all_info = {
+        "serial_number": "",
+        "product_url": "",
+        "price_jp": 0,
+        "jp_price_in_twd": 0,
+        "price_tw": [],
+        "product_list": []
+    }
+
     product_base = 'https://www.uniqlo.com/jp/ja/products/'
     product_url = product_base + serial_number
+
     # first check if product exist in UniqloJP
     product_page = requests.get(product_url)
     if product_page.status_code == 404:
@@ -30,7 +41,6 @@ def product_crawl(serial_number):
                 uq_url = "https://uq.goodjack.tw/search?query=" + serial_alt
                 url = requests.get(uq_url).url
                 product_code_tw = url[-14:]
-
                 product_info_tw_url = "https://d.uniqlo.com/tw/p/product/i/product/spu/pc/query/" + product_code_tw + "/zh_TW"
                 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
                 product_info_tw = requests.get(product_info_tw_url, headers=headers)
@@ -45,8 +55,14 @@ def product_crawl(serial_number):
                     price_tw.append(int(price_min))
                     price_tw.append(int(price_max))
 
-                result = [serial_number, product_url, price_jp, jp_price_in_twd, price_tw]
-                return result
+                # Return product_all_info
+                product_all_info["serial_number"] = serial_number
+                product_all_info["product_url"] = product_url
+                product_all_info["price_jp"] = price_jp
+                product_all_info["jp_price_in_twd"] = jp_price_in_twd
+                product_all_info["price_tw"] = price_tw
+
+                return product_all_info
         except:
             return -1
     # search price_jp in product page (new method, 10-Apr.-2024)
@@ -81,6 +97,7 @@ def product_crawl(serial_number):
 
             # Add color
             color_code = int(item['color']['code'][-2:])
+            
             if color_code <= 1:
                 color = 'White 白'
             elif color_code < 9:
@@ -110,75 +127,43 @@ def product_crawl(serial_number):
             # Add size
             size_code = int(item['size']['code'][-3:])
             size = ""
-            if size_code == 1:
-                size = "XXS"
-            elif size_code == 2:
-                size = "XS"
-            elif size_code == 3:
-                size = "S"
-            elif size_code == 4:
-                size = "M"
-            elif size_code == 5:
-                size = "L"
-            elif size_code == 6:
-                size = "XL"
-            elif size_code == 7:
-                size = "XXL"
-            elif size_code == 8:
-                size = "3XL"
-            elif size_code == 9:
-                size = "4XL"
-            elif size_code == 10:
-                size = "5XL"
-            elif size_code == 23:
-                size = "23-25"
-            elif size_code == 25:
-                size = "25-27"
-            elif size_code == 27:
-                size = "27-29"
-            elif size_code == 60:
-                size = "60"
-            elif size_code == 70:
-                size = "70"
-            elif size_code == 80:
-                size = "80"
-            elif size_code == 90:
-                size = "90"
-            elif size_code == 100:
-                size = "100"
-            elif size_code == 110:
-                size = "110"
-            elif size_code == 120:
-                size = "120"
-            elif size_code == 130:
-                size = "130"
-            elif size_code == 140:
-                size = "140"
-            elif size_code == 150:
-                size = "150"
-            elif size_code == 160:
-                size = "160"
-            elif size_code == 499:
-                size = "AA 65/70"
-            elif size_code == 500:
-                size = "AB 65/70"
-            elif size_code == 501:
-                size = "CD 65/70"
-            elif size_code == 502:
-                size = "EF 65/70"
-            elif size_code == 503:
-                size = "AB 75/80"
-            elif size_code == 504:
-                size = "CD 75/80"
-            elif size_code == 505:
-                size = "EF 75/80"
-            elif size_code == 506:
-                size = "AB 85/90"
-            elif size_code == 507:
-                size = "CD 85/90"
-            elif size_code == 508:
-                size = "EF 85/90"
-
+            size_dict = {
+                1: "XXS",
+                2: "XS",
+                3: "S",
+                4: "M",
+                5: "L",
+                6: "XL",
+                7: "XXL",
+                8: "3XL",
+                9: "4XL",
+                23: "23-25",
+                25: "25-27",
+                27: "27-29",
+                60: "60",
+                70: "70",
+                80: "80",
+                90: "90",
+                100: "100",
+                110: "110",
+                120: "120",
+                130: "130",
+                140: "140",
+                150: "150",
+                160: "160",
+                499: "AA 65/70",
+                500: "AB 65/70",
+                501: "CD 65/70",
+                502: "EF 65/70",
+                503: "AB 75/80",
+                504: "CD 75/80",
+                505: "EF 75/80",
+                506: "AB 85/90",
+                507: "CD 85/90",
+                508: "EF 85/90"
+            }
+            if size_code in size_dict:
+                size = size_dict[size_code]
 
             product_dict['size'] = size
 
@@ -222,9 +207,16 @@ def product_crawl(serial_number):
             price_tw.append(int(price_min))
             price_tw.append(int(price_max))
       
-        result = [serial_number, product_url, price_jp, jp_price_in_twd, price_tw, product_list]
+        # result = [serial_number, product_url, price_jp, jp_price_in_twd, price_tw, product_list]
+        # Return product_all_info
+        product_all_info["serial_number"] = serial_number
+        product_all_info["product_url"] = product_url
+        product_all_info["price_jp"] = price_jp
+        product_all_info["jp_price_in_twd"] = jp_price_in_twd
+        product_all_info["price_tw"] = price_tw
+        product_all_info["product_list"] = product_list
 
-        return result
+        return product_all_info
 
             
 # test, product list = [464787, 467536, 467543, 459591, 450314]

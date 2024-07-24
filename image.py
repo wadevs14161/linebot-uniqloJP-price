@@ -3,6 +3,7 @@ from azure.ai.vision.imageanalysis import ImageAnalysisClient
 from azure.ai.vision.imageanalysis.models import VisualFeatures
 from azure.core.credentials import AzureKeyCredential
 
+# Azure service is not available, 23/07/2024
 # Set the values of your computer vision endpoint and computer vision key
 # as environment variables:
 def analyze(url):

@@ -14,16 +14,25 @@ def reply_message(result, event, line_bot_api):
             messages=[TextMessage(text=reply1),
                         TextMessage(text=reply2)]))
     else:
-        reply1 = "商品連結:\n %s\n商品價格: %s日圓\n折合台幣: %s元" % (result[1], result[2], result[3])
+        '''result = {
+            "serial_number": "",
+            "product_url": "",
+            "price_jp": 0,
+            "jp_price_in_twd": 0,
+            "price_tw": [],
+            "product_list": []
+        }
+        '''
+        reply1 = "商品連結:\n %s\n商品價格: %s日圓\n折合台幣: %s元" % (result["product_url"], result["price_jp"], result["jp_price_in_twd"])
         # reply1 = "商品連結:\n %s\n商品價格: %s日圓\n折合台幣: %s元\n臺灣官網售價: %s元" % (result[1], result[2], result[3], result[4][2])
-        if len(result[4]) != 0:
+        if len(result["price_tw"]) != 0:
             try:
-                reply1 += "\n臺灣官網售價: {}元".format(result[4][2])
+                reply1 += "\n臺灣官網售價: {}元".format(result["price_tw"][2])
             except:
-                reply1 += "\n臺灣官網售價: {}元".format(result[4][1])
+                reply1 += "\n臺灣官網售價: {}元".format(result["price_tw"][1])
         available_dict = {}
         if len(result) == 6:
-            for item in result[5]:
+            for item in result["product_list"]:
                 if item['stock'] != 'STOCK_OUT' and item['color'] not in available_dict:
                     available_dict[item['color']] = []
                 if item['stock'] != 'STOCK_OUT' and item['color'] in available_dict:
@@ -34,7 +43,7 @@ def reply_message(result, event, line_bot_api):
                 reply2 += "\n{}: ".format(color)
                 reply2 += "{}".format(', '.join(available_dict[color]))
         else:
-            reply2 = "日本官網庫存查不到"
+            reply2 = "日本官網庫存查不到Q_Q"
 
         line_bot_api.reply_message_with_http_info(
             ReplyMessageRequest(
