@@ -1,5 +1,4 @@
 # Dockerize a django app with python 3.12.1
-# Start from the official Python image
 FROM python:3.12.1-slim
 
 # Set environment variables
