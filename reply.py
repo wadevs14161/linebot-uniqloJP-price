@@ -30,6 +30,8 @@ def reply_message(result, event, line_bot_api):
                 reply1 += "\n臺灣官網售價: {}元".format(result["price_tw"][2])
             except:
                 reply1 += "\n臺灣官網售價: {}元".format(result["price_tw"][1])
+            finally:
+                pass
         available_dict = {}
         if len(result) == 6:
             for item in result["product_list"]:

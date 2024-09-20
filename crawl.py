@@ -189,23 +189,25 @@ def product_crawl(serial_number):
         jp_price_in_twd = round(price_jp * exchange_rate)
 
 
-        uq_url = "https://uq.goodjack.tw/search?query=" + serial_number
-        url = requests.get(uq_url).url
-        product_code_tw = url[-14:]
+        # uq_url = "https://uq.goodjack.tw/search?query=" + serial_number
+        # url = requests.get(uq_url).url
+        # product_code_tw = url[-14:]
 
-        product_info_tw_url = "https://d.uniqlo.com/tw/p/product/i/product/spu/pc/query/" + product_code_tw + "/zh_TW"
-        headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
-        product_info_tw = requests.get(product_info_tw_url, headers=headers)
+        # # This url is invalid, 20/09/2024
+        # product_info_tw_url = "https://d.uniqlo.com/tw/p/product/i/product/spu/pc/query/" + product_code_tw + "/zh_TW"
+        # headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+        # product_info_tw = requests.get(product_info_tw_url, headers=headers)
 
-        json_input_tw = product_info_tw.json()
-        price_tw = []
-        if json_input_tw['success']:
-            price_original = json_input_tw['resp'][0]['summary']['originPrice']
-            price_min = json_input_tw['resp'][0]['summary']['minPrice']
-            price_max = json_input_tw['resp'][0]['summary']['maxPrice']
-            price_tw.append(int(price_original))
-            price_tw.append(int(price_min))
-            price_tw.append(int(price_max))
+        # print(product_info_tw.url)
+        # json_input_tw = product_info_tw.json()
+        # price_tw = []
+        # if json_input_tw['success']:
+        #     price_original = json_input_tw['resp'][0]['summary']['originPrice']
+        #     price_min = json_input_tw['resp'][0]['summary']['minPrice']
+        #     price_max = json_input_tw['resp'][0]['summary']['maxPrice']
+        #     price_tw.append(int(price_original))
+        #     price_tw.append(int(price_min))
+        #     price_tw.append(int(price_max))
       
         # result = [serial_number, product_url, price_jp, jp_price_in_twd, price_tw, product_list]
         # Return product_all_info
@@ -213,7 +215,7 @@ def product_crawl(serial_number):
         product_all_info["product_url"] = product_url
         product_all_info["price_jp"] = price_jp
         product_all_info["jp_price_in_twd"] = jp_price_in_twd
-        product_all_info["price_tw"] = price_tw
+        # product_all_info["price_tw"] = price_tw
         product_all_info["product_list"] = product_list
 
         return product_all_info
@@ -221,6 +223,6 @@ def product_crawl(serial_number):
             
 # test, product list = [464787, 467536, 467543, 459591, 450314]
 if __name__ == '__main__':
-    serial_number = '470989'
+    serial_number = '464787'
     print(product_crawl(serial_number))
     
