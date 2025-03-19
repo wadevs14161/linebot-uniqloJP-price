@@ -8,3 +8,18 @@
  * Debugger PIN: 472-641-679
 127.0.0.1 - - [08/Mar/2025 10:52:36] "GET / HTTP/1.1" 200 -
 127.0.0.1 - - [08/Mar/2025 10:52:37] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+/Users/wenshinluo/Documents/GitHub/flask-azure/venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+ * Serving Flask app 'app'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+/Users/wenshinluo/Documents/GitHub/flask-azure/venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+ * Debugger is active!
+ * Debugger PIN: 232-099-913
+127.0.0.1 - - [19/Mar/2025 19:14:25] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [19/Mar/2025 19:14:26] "[36mGET /static/bootstrap/css/bootstrap.min.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [19/Mar/2025 19:14:26] "[36mGET /static/images/azure-icon.svg HTTP/1.1[0m" 304 -

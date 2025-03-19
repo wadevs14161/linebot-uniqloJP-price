@@ -1,5 +1,23 @@
 import os
 
+# Check if venv is already exist
+if not os.path.isdir('venv'):
+    print('Creating virtual environment...')
+    # Create virtual environment
+    os.system('python3 -m venv venv')
+
+# Activate virtual environment
+print('Activating virtual environment...')
+os.system('source venv/bin/activate')
+
+# Run pip install -r requirements.txt
+print('Installing requirements...')
+os.system('pip3 install -r requirements.txt')
+
+# Time out for 45 seconds
+print('Waiting for 45 seconds...')
+os.system('sleep 45')
+
 # Export keys to environment variables
 LINE_CHANNEL_SECRET = ''
 LINE_CHANNEL_ACCESS_TOKEN = ''
