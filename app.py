@@ -48,8 +48,7 @@ configuration = Configuration(
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    # Show template index.html
-    return render_template('index.html')
+    return "You reached line bot server"
 
 @app.route("/calculator", methods=['GET', 'POST'])
 def calculate():
