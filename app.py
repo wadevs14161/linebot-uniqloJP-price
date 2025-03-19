@@ -48,7 +48,8 @@ configuration = Configuration(
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return "Linebot root page!"
+    # Show template index.html
+    return render_template('index.html')
 
 
 @app.route("/find_product", methods=['POST'])
