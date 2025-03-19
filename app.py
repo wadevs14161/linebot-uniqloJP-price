@@ -51,6 +51,19 @@ def index():
     # Show template index.html
     return render_template('index.html')
 
+@app.route("/calculator", methods=['GET', 'POST'])
+def calculate():
+    if request.method == 'POST':
+        # Get input from form
+        input1 = request.form['input1']
+        input2 = request.form['input2']
+        # Calculate
+        result = int(input1) + int(input2)
+        # Show result
+        return render_template('calculator.html', result=result)
+    return render_template('calculator.html')
+
+
 
 @app.route("/find_product", methods=['POST'])
 def find_product():

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator test</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    {# Build a form to take two input #}
+    <form action="/calculator" method="post">
+        <label for="num1">Number 1:</label>
+        <input type="text" id="num1" name="input1">
+        <br>
+        <label for="num2">Number 2:</label>
+        <input type="text" id="num2" name="input2">
+        <br>
+        <input type="submit" value="Calculate">
+    </form>
+    <br>
+    {# Display the result #}
+    {% if result %}
+        <p>Result: {{ result }}</p>
+    {% endif %}
+</body>
+</html>
