@@ -6,6 +6,10 @@ if not os.path.isdir('venv'):
     # Create virtual environment
     os.system('python3 -m venv venv')
 
+    # Time out for 30 seconds
+    print('Waiting for 30 seconds...')
+    os.system('sleep 30')
+
 # Activate virtual environment
 print('Activating virtual environment...')
 os.system('source venv/bin/activate')
