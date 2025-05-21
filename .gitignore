@@ -133,3 +133,6 @@ dmypy.json
 dockerfile
 
 /line-chatbot-uniqlo
+
+# test files
+testCrawl.py

@@ -223,6 +223,6 @@ def product_crawl(serial_number):
             
 # test, product list = [464787, 467536, 467543, 459591, 450314]
 if __name__ == '__main__':
-    serial_number = '464787'
+    serial_number = '474479'
     print(product_crawl(serial_number))
     
