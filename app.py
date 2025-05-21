@@ -48,7 +48,31 @@ configuration = Configuration(
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return "You reached line bot server"
+    return '''
+    <html>
+        <head>
+            <title>Line Bot Server</title>
+            <style>
+                body {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                    margin: 0;
+                    font-family: Arial, sans-serif;
+                    background-color: #f9f9f9;
+                }
+                h1 {
+                    font-size: 3em;
+                    color: #333;
+                }
+            </style>
+        </head>
+        <body>
+            <h1>You reached line bot server</h1>
+        </body>
+    </html>
+    '''
 
 @app.route("/calculator", methods=['GET', 'POST'])
 def calculate():
