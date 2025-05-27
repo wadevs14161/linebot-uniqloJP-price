@@ -1,25 +1,731 @@
  * Serving Flask app 'app'
  * Debug mode: on
 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:5000
+ * Running on http://172.16.2.157:5000
 [33mPress CTRL+C to quit[0m
  * Restarting with stat
  * Debugger is active!
- * Debugger PIN: 472-641-679
-127.0.0.1 - - [08/Mar/2025 10:52:36] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [08/Mar/2025 10:52:37] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
-/Users/wenshinluo/Documents/GitHub/flask-azure/venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
- * Serving Flask app 'app'
- * Debug mode: on
-[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-[33mPress CTRL+C to quit[0m
- * Restarting with stat
-/Users/wenshinluo/Documents/GitHub/flask-azure/venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
- * Debugger is active!
- * Debugger PIN: 232-099-913
-127.0.0.1 - - [19/Mar/2025 19:14:25] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [19/Mar/2025 19:14:26] "[36mGET /static/bootstrap/css/bootstrap.min.css HTTP/1.1[0m" 304 -
-127.0.0.1 - - [19/Mar/2025 19:14:26] "[36mGET /static/images/azure-icon.svg HTTP/1.1[0m" 304 -
+ * Debugger PIN: 715-166-473
+127.0.0.1 - - [27/May/2025 11:47:49] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [27/May/2025 11:47:49] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+[2025-05-27 11:48:58,612] INFO in app: Request body: {"destination":"U54620d6698aac2f4e353c38b1559cc2b","events":[]}
+127.0.0.1 - - [27/May/2025 11:48:58] "POST /find_product HTTP/1.1" 200 -
+[2025-05-27 11:49:06,803] INFO in app: Request body: {"destination":"U54620d6698aac2f4e353c38b1559cc2b","events":[{"type":"message","message":{"type":"text","id":"562895128868946125","quoteToken":"VCvMLAU3bjv0IedctVH0_-sCyc-0o78Gkr6MU1-oELdPd27ik-GFTrOdv-nCiaV51Oz6by3Cgjc9CmNmysswB-eK98tw9pV0In5unzBWD110WyyTZsr6LOJLjA8zHuzXdSZBmvByOlCHPWa2aa9xWA","text":"1"},"webhookEventId":"01JW8NREF26ZQKTRQ2CCPYSV5P","deliveryContext":{"isRedelivery":false},"timestamp":1748342946026,"source":{"type":"user","userId":"U4392235d6c87786e9f8e4ab1cec26d28"},"replyToken":"ac55522215584237aa31c3a93d4adec0","mode":"active"}]}
+127.0.0.1 - - [27/May/2025 11:49:07] "POST /find_product HTTP/1.1" 200 -
+[2025-05-27 11:49:18,065] INFO in app: Request body: {"destination":"U54620d6698aac2f4e353c38b1559cc2b","events":[{"type":"message","message":{"type":"text","id":"562895147172888747","quoteToken":"RLO7VAIsw_C4xyz3N7szQpLMU7htAmQtIp0ZNteFdXQ1JWIy28WSC-jC1lZVr_LUczLd49UwJdMWBeLzypciRg0okte5BgN_QWX33is1kPB4Gi-FHNqcE8QkFPYpXxYwRHR2eJGIkzRq7lAKHO6RZw","text":"475387"},"webhookEventId":"01JW8NRSC5FVG4ECH754DK5WBT","deliveryContext":{"isRedelivery":false},"timestamp":1748342956938,"source":{"type":"user","userId":"U4392235d6c87786e9f8e4ab1cec26d28"},"replyToken":"c6e423ab4490442cb1b91ec15e71f54e","mode":"active"}]}
+127.0.0.1 - - [27/May/2025 11:49:21] "POST /find_product HTTP/1.1" 200 -
+[2025-05-27 11:50:20,018] INFO in app: Request body: {"destination":"U54620d6698aac2f4e353c38b1559cc2b","events":[{"type":"message","message":{"type":"text","id":"562895147172888747","quoteToken":"RLO7VAIsw_C4xyz3N7szQpLMU7htAmQtIp0ZNteFdXQ1JWIy28WSC-jC1lZVr_LUczLd49UwJdMWBeLzypciRg0okte5BgN_QWX33is1kPB4Gi-FHNqcE8QkFPYpXxYwRHR2eJGIkzRq7lAKHO6RZw","text":"475387"},"webhookEventId":"01JW8NRSC5FVG4ECH754DK5WBT","deliveryContext":{"isRedelivery":true},"timestamp":1748342956938,"source":{"type":"user","userId":"U4392235d6c87786e9f8e4ab1cec26d28"},"replyToken":"c6e423ab4490442cb1b91ec15e71f54e","mode":"active"}]}
+127.0.0.1 - - [27/May/2025 11:50:23] "[35m[1mPOST /find_product HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2548, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 89, in find_product
+    handler.handle(body, signature)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 227, in handle
+    self.__invoke_func(func, event, payload)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 239, in __invoke_func
+    func(event)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 111, in message_text
+    reply_message(result, event, line_bot_api)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/reply.py", line 50, in reply_message
+    line_bot_api.reply_message_with_http_info(
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 40, in wrapper_function
+    return vd.call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 134, in call
+    return self.execute(m)
+           ^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 206, in execute
+    return self.raw_function(**d, **var_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api/messaging_api.py", line 7048, in reply_message_with_http_info
+    return self.api_client.call_api(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 407, in call_api
+    return self.__call_api(resource_path, method,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 222, in __call_api
+    raise e
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 212, in __call_api
+    response_data = self.request(
+                    ^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 451, in request
+    return self.rest_client.post_request(url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 270, in post_request
+    return self.request("POST", url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 229, in request
+    raise ApiException(http_resp=r)
+linebot.v3.messaging.exceptions.ApiException: (400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'Server': 'legy', 'Content-Type': 'application/json', 'x-content-type-options': 'nosniff', 'x-frame-options': 'DENY', 'x-line-request-id': 'a17310f2-043e-42d9-81f2-1d0be699040f', 'x-xss-protection': '1; mode=block', 'Content-Length': '33', 'Expires': 'Tue, 27 May 2025 10:50:23 GMT', 'Cache-Control': 'max-age=0, no-cache, no-store', 'Pragma': 'no-cache', 'Date': 'Tue, 27 May 2025 10:50:23 GMT', 'Connection': 'close'})
+HTTP response body: {"message":"Invalid reply token"}
+
+[2025-05-27 11:51:22,175] INFO in app: Request body: {"destination":"U54620d6698aac2f4e353c38b1559cc2b","events":[{"type":"message","message":{"type":"text","id":"562895147172888747","quoteToken":"RLO7VAIsw_C4xyz3N7szQpLMU7htAmQtIp0ZNteFdXQ1JWIy28WSC-jC1lZVr_LUczLd49UwJdMWBeLzypciRg0okte5BgN_QWX33is1kPB4Gi-FHNqcE8QkFPYpXxYwRHR2eJGIkzRq7lAKHO6RZw","text":"475387"},"webhookEventId":"01JW8NRSC5FVG4ECH754DK5WBT","deliveryContext":{"isRedelivery":true},"timestamp":1748342956938,"source":{"type":"user","userId":"U4392235d6c87786e9f8e4ab1cec26d28"},"replyToken":"c6e423ab4490442cb1b91ec15e71f54e","mode":"active"}]}
+127.0.0.1 - - [27/May/2025 11:51:25] "[35m[1mPOST /find_product HTTP/1.1[0m" 500 -
+[2025-05-27 11:52:24,156] INFO in app: Request body: {"destination":"U54620d6698aac2f4e353c38b1559cc2b","events":[{"type":"message","message":{"type":"text","id":"562895147172888747","quoteToken":"RLO7VAIsw_C4xyz3N7szQpLMU7htAmQtIp0ZNteFdXQ1JWIy28WSC-jC1lZVr_LUczLd49UwJdMWBeLzypciRg0okte5BgN_QWX33is1kPB4Gi-FHNqcE8QkFPYpXxYwRHR2eJGIkzRq7lAKHO6RZw","text":"475387"},"webhookEventId":"01JW8NRSC5FVG4ECH754DK5WBT","deliveryContext":{"isRedelivery":true},"timestamp":1748342956938,"source":{"type":"user","userId":"U4392235d6c87786e9f8e4ab1cec26d28"},"replyToken":"c6e423ab4490442cb1b91ec15e71f54e","mode":"active"}]}
+127.0.0.1 - - [27/May/2025 11:52:27] "[35m[1mPOST /find_product HTTP/1.1[0m" 500 -
+[2025-05-27 11:53:26,184] INFO in app: Request body: {"destination":"U54620d6698aac2f4e353c38b1559cc2b","events":[{"type":"message","message":{"type":"text","id":"562895147172888747","quoteToken":"RLO7VAIsw_C4xyz3N7szQpLMU7htAmQtIp0ZNteFdXQ1JWIy28WSC-jC1lZVr_LUczLd49UwJdMWBeLzypciRg0okte5BgN_QWX33is1kPB4Gi-FHNqcE8QkFPYpXxYwRHR2eJGIkzRq7lAKHO6RZw","text":"475387"},"webhookEventId":"01JW8NRSC5FVG4ECH754DK5WBT","deliveryContext":{"isRedelivery":true},"timestamp":1748342956938,"source":{"type":"user","userId":"U4392235d6c87786e9f8e4ab1cec26d28"},"replyToken":"c6e423ab4490442cb1b91ec15e71f54e","mode":"active"}]}
+127.0.0.1 - - [27/May/2025 11:53:28] "[35m[1mPOST /find_product HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2548, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 89, in find_product
+    handler.handle(body, signature)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 227, in handle
+    self.__invoke_func(func, event, payload)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 239, in __invoke_func
+    func(event)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 111, in message_text
+    reply_message(result, event, line_bot_api)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/reply.py", line 50, in reply_message
+    line_bot_api.reply_message_with_http_info(
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 40, in wrapper_function
+    return vd.call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 134, in call
+    return self.execute(m)
+           ^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 206, in execute
+    return self.raw_function(**d, **var_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api/messaging_api.py", line 7048, in reply_message_with_http_info
+    return self.api_client.call_api(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 407, in call_api
+    return self.__call_api(resource_path, method,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 222, in __call_api
+    raise e
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 212, in __call_api
+    response_data = self.request(
+                    ^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 451, in request
+    return self.rest_client.post_request(url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 270, in post_request
+    return self.request("POST", url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 229, in request
+    raise ApiException(http_resp=r)
+linebot.v3.messaging.exceptions.ApiException: (400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'Server': 'legy', 'Content-Type': 'application/json', 'x-content-type-options': 'nosniff', 'x-frame-options': 'DENY', 'x-line-request-id': '76168aa1-3f6f-49f0-b21f-f67977ab7072', 'x-xss-protection': '1; mode=block', 'Content-Length': '33', 'Expires': 'Tue, 27 May 2025 10:53:28 GMT', 'Cache-Control': 'max-age=0, no-cache, no-store', 'Pragma': 'no-cache', 'Date': 'Tue, 27 May 2025 10:53:28 GMT', 'Connection': 'close'})
+HTTP response body: {"message":"Invalid reply token"}
+
+[2025-05-27 11:54:28,240] INFO in app: Request body: {"destination":"U54620d6698aac2f4e353c38b1559cc2b","events":[{"type":"message","message":{"type":"text","id":"562895147172888747","quoteToken":"RLO7VAIsw_C4xyz3N7szQpLMU7htAmQtIp0ZNteFdXQ1JWIy28WSC-jC1lZVr_LUczLd49UwJdMWBeLzypciRg0okte5BgN_QWX33is1kPB4Gi-FHNqcE8QkFPYpXxYwRHR2eJGIkzRq7lAKHO6RZw","text":"475387"},"webhookEventId":"01JW8NRSC5FVG4ECH754DK5WBT","deliveryContext":{"isRedelivery":true},"timestamp":1748342956938,"source":{"type":"user","userId":"U4392235d6c87786e9f8e4ab1cec26d28"},"replyToken":"c6e423ab4490442cb1b91ec15e71f54e","mode":"active"}]}
+127.0.0.1 - - [27/May/2025 11:54:31] "[35m[1mPOST /find_product HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2548, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 89, in find_product
+    handler.handle(body, signature)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 227, in handle
+    self.__invoke_func(func, event, payload)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 239, in __invoke_func
+    func(event)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 111, in message_text
+    reply_message(result, event, line_bot_api)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/reply.py", line 50, in reply_message
+    line_bot_api.reply_message_with_http_info(
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 40, in wrapper_function
+    return vd.call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 134, in call
+    return self.execute(m)
+           ^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 206, in execute
+    return self.raw_function(**d, **var_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api/messaging_api.py", line 7048, in reply_message_with_http_info
+    return self.api_client.call_api(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 407, in call_api
+    return self.__call_api(resource_path, method,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 222, in __call_api
+    raise e
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 212, in __call_api
+    response_data = self.request(
+                    ^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 451, in request
+    return self.rest_client.post_request(url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 270, in post_request
+    return self.request("POST", url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 229, in request
+    raise ApiException(http_resp=r)
+linebot.v3.messaging.exceptions.ApiException: (400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'Server': 'legy', 'Content-Type': 'application/json', 'x-content-type-options': 'nosniff', 'x-frame-options': 'DENY', 'x-line-request-id': 'cf5b13f1-05f7-4f79-8636-523e6c956404', 'x-xss-protection': '1; mode=block', 'Content-Length': '33', 'Expires': 'Tue, 27 May 2025 10:54:31 GMT', 'Cache-Control': 'max-age=0, no-cache, no-store', 'Pragma': 'no-cache', 'Date': 'Tue, 27 May 2025 10:54:31 GMT', 'Connection': 'close'})
+HTTP response body: {"message":"Invalid reply token"}
+
+[2025-05-27 11:55:30,197] INFO in app: Request body: {"destination":"U54620d6698aac2f4e353c38b1559cc2b","events":[{"type":"message","message":{"type":"text","id":"562895147172888747","quoteToken":"RLO7VAIsw_C4xyz3N7szQpLMU7htAmQtIp0ZNteFdXQ1JWIy28WSC-jC1lZVr_LUczLd49UwJdMWBeLzypciRg0okte5BgN_QWX33is1kPB4Gi-FHNqcE8QkFPYpXxYwRHR2eJGIkzRq7lAKHO6RZw","text":"475387"},"webhookEventId":"01JW8NRSC5FVG4ECH754DK5WBT","deliveryContext":{"isRedelivery":true},"timestamp":1748342956938,"source":{"type":"user","userId":"U4392235d6c87786e9f8e4ab1cec26d28"},"replyToken":"c6e423ab4490442cb1b91ec15e71f54e","mode":"active"}]}
+127.0.0.1 - - [27/May/2025 11:55:32] "[35m[1mPOST /find_product HTTP/1.1[0m" 500 -
+[2025-05-27 11:56:32,247] INFO in app: Request body: {"destination":"U54620d6698aac2f4e353c38b1559cc2b","events":[{"type":"message","message":{"type":"text","id":"562895147172888747","quoteToken":"RLO7VAIsw_C4xyz3N7szQpLMU7htAmQtIp0ZNteFdXQ1JWIy28WSC-jC1lZVr_LUczLd49UwJdMWBeLzypciRg0okte5BgN_QWX33is1kPB4Gi-FHNqcE8QkFPYpXxYwRHR2eJGIkzRq7lAKHO6RZw","text":"475387"},"webhookEventId":"01JW8NRSC5FVG4ECH754DK5WBT","deliveryContext":{"isRedelivery":true},"timestamp":1748342956938,"source":{"type":"user","userId":"U4392235d6c87786e9f8e4ab1cec26d28"},"replyToken":"c6e423ab4490442cb1b91ec15e71f54e","mode":"active"}]}
+127.0.0.1 - - [27/May/2025 11:56:35] "[35m[1mPOST /find_product HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2548, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 89, in find_product
+    handler.handle(body, signature)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 227, in handle
+    self.__invoke_func(func, event, payload)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 239, in __invoke_func
+    func(event)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 111, in message_text
+    reply_message(result, event, line_bot_api)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/reply.py", line 50, in reply_message
+    line_bot_api.reply_message_with_http_info(
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 40, in wrapper_function
+    return vd.call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 134, in call
+    return self.execute(m)
+           ^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 206, in execute
+    return self.raw_function(**d, **var_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api/messaging_api.py", line 7048, in reply_message_with_http_info
+    return self.api_client.call_api(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 407, in call_api
+    return self.__call_api(resource_path, method,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 222, in __call_api
+    raise e
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 212, in __call_api
+    response_data = self.request(
+                    ^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 451, in request
+    return self.rest_client.post_request(url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 270, in post_request
+    return self.request("POST", url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 229, in request
+    raise ApiException(http_resp=r)
+linebot.v3.messaging.exceptions.ApiException: (400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'Server': 'legy', 'Content-Type': 'application/json', 'x-content-type-options': 'nosniff', 'x-frame-options': 'DENY', 'x-line-request-id': '6ab9783d-b5c8-486a-9df6-535b55080d78', 'x-xss-protection': '1; mode=block', 'Content-Length': '33', 'Expires': 'Tue, 27 May 2025 10:56:35 GMT', 'Cache-Control': 'max-age=0, no-cache, no-store', 'Pragma': 'no-cache', 'Date': 'Tue, 27 May 2025 10:56:35 GMT', 'Connection': 'close'})
+HTTP response body: {"message":"Invalid reply token"}
+
+[2025-05-27 11:57:34,304] INFO in app: Request body: {"destination":"U54620d6698aac2f4e353c38b1559cc2b","events":[{"type":"message","message":{"type":"text","id":"562895147172888747","quoteToken":"RLO7VAIsw_C4xyz3N7szQpLMU7htAmQtIp0ZNteFdXQ1JWIy28WSC-jC1lZVr_LUczLd49UwJdMWBeLzypciRg0okte5BgN_QWX33is1kPB4Gi-FHNqcE8QkFPYpXxYwRHR2eJGIkzRq7lAKHO6RZw","text":"475387"},"webhookEventId":"01JW8NRSC5FVG4ECH754DK5WBT","deliveryContext":{"isRedelivery":true},"timestamp":1748342956938,"source":{"type":"user","userId":"U4392235d6c87786e9f8e4ab1cec26d28"},"replyToken":"c6e423ab4490442cb1b91ec15e71f54e","mode":"active"}]}
+127.0.0.1 - - [27/May/2025 11:57:36] "[35m[1mPOST /find_product HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2548, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 89, in find_product
+    handler.handle(body, signature)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 227, in handle
+    self.__invoke_func(func, event, payload)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 239, in __invoke_func
+    func(event)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 111, in message_text
+    reply_message(result, event, line_bot_api)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/reply.py", line 50, in reply_message
+    line_bot_api.reply_message_with_http_info(
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 40, in wrapper_function
+    return vd.call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 134, in call
+    return self.execute(m)
+           ^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 206, in execute
+    return self.raw_function(**d, **var_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api/messaging_api.py", line 7048, in reply_message_with_http_info
+    return self.api_client.call_api(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 407, in call_api
+    return self.__call_api(resource_path, method,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 222, in __call_api
+    raise e
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 212, in __call_api
+    response_data = self.request(
+                    ^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 451, in request
+    return self.rest_client.post_request(url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 270, in post_request
+    return self.request("POST", url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 229, in request
+    raise ApiException(http_resp=r)
+linebot.v3.messaging.exceptions.ApiException: (400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'Server': 'legy', 'Content-Type': 'application/json', 'x-content-type-options': 'nosniff', 'x-frame-options': 'DENY', 'x-line-request-id': 'f4356bcd-df43-4b61-a383-66ee02762c2f', 'x-xss-protection': '1; mode=block', 'Content-Length': '33', 'Expires': 'Tue, 27 May 2025 10:57:36 GMT', 'Cache-Control': 'max-age=0, no-cache, no-store', 'Pragma': 'no-cache', 'Date': 'Tue, 27 May 2025 10:57:36 GMT', 'Connection': 'close'})
+HTTP response body: {"message":"Invalid reply token"}
+
+[2025-05-27 11:58:36,209] INFO in app: Request body: {"destination":"U54620d6698aac2f4e353c38b1559cc2b","events":[{"type":"message","message":{"type":"text","id":"562895147172888747","quoteToken":"RLO7VAIsw_C4xyz3N7szQpLMU7htAmQtIp0ZNteFdXQ1JWIy28WSC-jC1lZVr_LUczLd49UwJdMWBeLzypciRg0okte5BgN_QWX33is1kPB4Gi-FHNqcE8QkFPYpXxYwRHR2eJGIkzRq7lAKHO6RZw","text":"475387"},"webhookEventId":"01JW8NRSC5FVG4ECH754DK5WBT","deliveryContext":{"isRedelivery":true},"timestamp":1748342956938,"source":{"type":"user","userId":"U4392235d6c87786e9f8e4ab1cec26d28"},"replyToken":"c6e423ab4490442cb1b91ec15e71f54e","mode":"active"}]}
+127.0.0.1 - - [27/May/2025 11:58:38] "[35m[1mPOST /find_product HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2548, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 89, in find_product
+    handler.handle(body, signature)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 227, in handle
+    self.__invoke_func(func, event, payload)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 239, in __invoke_func
+    func(event)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 111, in message_text
+    reply_message(result, event, line_bot_api)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/reply.py", line 50, in reply_message
+    line_bot_api.reply_message_with_http_info(
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 40, in wrapper_function
+    return vd.call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 134, in call
+    return self.execute(m)
+           ^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 206, in execute
+    return self.raw_function(**d, **var_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api/messaging_api.py", line 7048, in reply_message_with_http_info
+    return self.api_client.call_api(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 407, in call_api
+    return self.__call_api(resource_path, method,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 222, in __call_api
+    raise e
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 212, in __call_api
+    response_data = self.request(
+                    ^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 451, in request
+    return self.rest_client.post_request(url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 270, in post_request
+    return self.request("POST", url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 229, in request
+    raise ApiException(http_resp=r)
+linebot.v3.messaging.exceptions.ApiException: (400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'Server': 'legy', 'Content-Type': 'application/json', 'x-content-type-options': 'nosniff', 'x-frame-options': 'DENY', 'x-line-request-id': '97ed4254-9556-4921-96d2-e422bd94fd50', 'x-xss-protection': '1; mode=block', 'Content-Length': '33', 'Expires': 'Tue, 27 May 2025 10:58:38 GMT', 'Cache-Control': 'max-age=0, no-cache, no-store', 'Pragma': 'no-cache', 'Date': 'Tue, 27 May 2025 10:58:38 GMT', 'Connection': 'close'})
+HTTP response body: {"message":"Invalid reply token"}
+
+[2025-05-27 11:59:38,216] INFO in app: Request body: {"destination":"U54620d6698aac2f4e353c38b1559cc2b","events":[{"type":"message","message":{"type":"text","id":"562895147172888747","quoteToken":"RLO7VAIsw_C4xyz3N7szQpLMU7htAmQtIp0ZNteFdXQ1JWIy28WSC-jC1lZVr_LUczLd49UwJdMWBeLzypciRg0okte5BgN_QWX33is1kPB4Gi-FHNqcE8QkFPYpXxYwRHR2eJGIkzRq7lAKHO6RZw","text":"475387"},"webhookEventId":"01JW8NRSC5FVG4ECH754DK5WBT","deliveryContext":{"isRedelivery":true},"timestamp":1748342956938,"source":{"type":"user","userId":"U4392235d6c87786e9f8e4ab1cec26d28"},"replyToken":"c6e423ab4490442cb1b91ec15e71f54e","mode":"active"}]}
+127.0.0.1 - - [27/May/2025 11:59:41] "[35m[1mPOST /find_product HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2548, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 89, in find_product
+    handler.handle(body, signature)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 227, in handle
+    self.__invoke_func(func, event, payload)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 239, in __invoke_func
+    func(event)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 111, in message_text
+    reply_message(result, event, line_bot_api)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/reply.py", line 50, in reply_message
+    line_bot_api.reply_message_with_http_info(
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 40, in wrapper_function
+    return vd.call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 134, in call
+    return self.execute(m)
+           ^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 206, in execute
+    return self.raw_function(**d, **var_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api/messaging_api.py", line 7048, in reply_message_with_http_info
+    return self.api_client.call_api(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 407, in call_api
+    return self.__call_api(resource_path, method,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 222, in __call_api
+    raise e
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 212, in __call_api
+    response_data = self.request(
+                    ^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 451, in request
+    return self.rest_client.post_request(url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 270, in post_request
+    return self.request("POST", url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 229, in request
+    raise ApiException(http_resp=r)
+linebot.v3.messaging.exceptions.ApiException: (400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'Server': 'legy', 'Content-Type': 'application/json', 'x-content-type-options': 'nosniff', 'x-frame-options': 'DENY', 'x-line-request-id': 'dd20cc9a-6ab4-460a-a67a-a3c9536f2a09', 'x-xss-protection': '1; mode=block', 'Content-Length': '33', 'Expires': 'Tue, 27 May 2025 10:59:41 GMT', 'Cache-Control': 'max-age=0, no-cache, no-store', 'Pragma': 'no-cache', 'Date': 'Tue, 27 May 2025 10:59:41 GMT', 'Connection': 'close'})
+HTTP response body: {"message":"Invalid reply token"}
+
+[2025-05-27 12:00:40,266] INFO in app: Request body: {"destination":"U54620d6698aac2f4e353c38b1559cc2b","events":[{"type":"message","message":{"type":"text","id":"562895147172888747","quoteToken":"RLO7VAIsw_C4xyz3N7szQpLMU7htAmQtIp0ZNteFdXQ1JWIy28WSC-jC1lZVr_LUczLd49UwJdMWBeLzypciRg0okte5BgN_QWX33is1kPB4Gi-FHNqcE8QkFPYpXxYwRHR2eJGIkzRq7lAKHO6RZw","text":"475387"},"webhookEventId":"01JW8NRSC5FVG4ECH754DK5WBT","deliveryContext":{"isRedelivery":true},"timestamp":1748342956938,"source":{"type":"user","userId":"U4392235d6c87786e9f8e4ab1cec26d28"},"replyToken":"c6e423ab4490442cb1b91ec15e71f54e","mode":"active"}]}
+127.0.0.1 - - [27/May/2025 12:00:42] "[35m[1mPOST /find_product HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2548, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 89, in find_product
+    handler.handle(body, signature)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 227, in handle
+    self.__invoke_func(func, event, payload)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 239, in __invoke_func
+    func(event)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 111, in message_text
+    reply_message(result, event, line_bot_api)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/reply.py", line 50, in reply_message
+    line_bot_api.reply_message_with_http_info(
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 40, in wrapper_function
+    return vd.call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 134, in call
+    return self.execute(m)
+           ^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 206, in execute
+    return self.raw_function(**d, **var_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api/messaging_api.py", line 7048, in reply_message_with_http_info
+    return self.api_client.call_api(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 407, in call_api
+    return self.__call_api(resource_path, method,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 222, in __call_api
+    raise e
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 212, in __call_api
+    response_data = self.request(
+                    ^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 451, in request
+    return self.rest_client.post_request(url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 270, in post_request
+    return self.request("POST", url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 229, in request
+    raise ApiException(http_resp=r)
+linebot.v3.messaging.exceptions.ApiException: (400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'Server': 'legy', 'Content-Type': 'application/json', 'x-content-type-options': 'nosniff', 'x-frame-options': 'DENY', 'x-line-request-id': '4eef114a-086c-4bf2-afb8-41da655a5619', 'x-xss-protection': '1; mode=block', 'Content-Length': '33', 'Expires': 'Tue, 27 May 2025 11:00:42 GMT', 'Cache-Control': 'max-age=0, no-cache, no-store', 'Pragma': 'no-cache', 'Date': 'Tue, 27 May 2025 11:00:42 GMT', 'Connection': 'close'})
+HTTP response body: {"message":"Invalid reply token"}
+
+[2025-05-27 12:01:42,319] INFO in app: Request body: {"destination":"U54620d6698aac2f4e353c38b1559cc2b","events":[{"type":"message","message":{"type":"text","id":"562895147172888747","quoteToken":"RLO7VAIsw_C4xyz3N7szQpLMU7htAmQtIp0ZNteFdXQ1JWIy28WSC-jC1lZVr_LUczLd49UwJdMWBeLzypciRg0okte5BgN_QWX33is1kPB4Gi-FHNqcE8QkFPYpXxYwRHR2eJGIkzRq7lAKHO6RZw","text":"475387"},"webhookEventId":"01JW8NRSC5FVG4ECH754DK5WBT","deliveryContext":{"isRedelivery":true},"timestamp":1748342956938,"source":{"type":"user","userId":"U4392235d6c87786e9f8e4ab1cec26d28"},"replyToken":"c6e423ab4490442cb1b91ec15e71f54e","mode":"active"}]}
+127.0.0.1 - - [27/May/2025 12:01:46] "[35m[1mPOST /find_product HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2548, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 89, in find_product
+    handler.handle(body, signature)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 227, in handle
+    self.__invoke_func(func, event, payload)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 239, in __invoke_func
+    func(event)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 111, in message_text
+    reply_message(result, event, line_bot_api)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/reply.py", line 50, in reply_message
+    line_bot_api.reply_message_with_http_info(
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 40, in wrapper_function
+    return vd.call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 134, in call
+    return self.execute(m)
+           ^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 206, in execute
+    return self.raw_function(**d, **var_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api/messaging_api.py", line 7048, in reply_message_with_http_info
+    return self.api_client.call_api(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 407, in call_api
+    return self.__call_api(resource_path, method,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 222, in __call_api
+    raise e
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 212, in __call_api
+    response_data = self.request(
+                    ^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 451, in request
+    return self.rest_client.post_request(url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 270, in post_request
+    return self.request("POST", url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 229, in request
+    raise ApiException(http_resp=r)
+linebot.v3.messaging.exceptions.ApiException: (400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'Server': 'legy', 'Content-Type': 'application/json', 'x-content-type-options': 'nosniff', 'x-frame-options': 'DENY', 'x-line-request-id': 'f5a4d553-3da3-4bb7-95b6-e9d828824710', 'x-xss-protection': '1; mode=block', 'Content-Length': '33', 'Expires': 'Tue, 27 May 2025 11:01:46 GMT', 'Cache-Control': 'max-age=0, no-cache, no-store', 'Pragma': 'no-cache', 'Date': 'Tue, 27 May 2025 11:01:46 GMT', 'Connection': 'close'})
+HTTP response body: {"message":"Invalid reply token"}
+
+[2025-05-27 12:02:44,262] INFO in app: Request body: {"destination":"U54620d6698aac2f4e353c38b1559cc2b","events":[{"type":"message","message":{"type":"text","id":"562895147172888747","quoteToken":"RLO7VAIsw_C4xyz3N7szQpLMU7htAmQtIp0ZNteFdXQ1JWIy28WSC-jC1lZVr_LUczLd49UwJdMWBeLzypciRg0okte5BgN_QWX33is1kPB4Gi-FHNqcE8QkFPYpXxYwRHR2eJGIkzRq7lAKHO6RZw","text":"475387"},"webhookEventId":"01JW8NRSC5FVG4ECH754DK5WBT","deliveryContext":{"isRedelivery":true},"timestamp":1748342956938,"source":{"type":"user","userId":"U4392235d6c87786e9f8e4ab1cec26d28"},"replyToken":"c6e423ab4490442cb1b91ec15e71f54e","mode":"active"}]}
+127.0.0.1 - - [27/May/2025 12:02:48] "[35m[1mPOST /find_product HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2548, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 89, in find_product
+    handler.handle(body, signature)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 227, in handle
+    self.__invoke_func(func, event, payload)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 239, in __invoke_func
+    func(event)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 111, in message_text
+    reply_message(result, event, line_bot_api)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/reply.py", line 50, in reply_message
+    line_bot_api.reply_message_with_http_info(
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 40, in wrapper_function
+    return vd.call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 134, in call
+    return self.execute(m)
+           ^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 206, in execute
+    return self.raw_function(**d, **var_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api/messaging_api.py", line 7048, in reply_message_with_http_info
+    return self.api_client.call_api(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 407, in call_api
+    return self.__call_api(resource_path, method,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 222, in __call_api
+    raise e
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 212, in __call_api
+    response_data = self.request(
+                    ^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 451, in request
+    return self.rest_client.post_request(url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 270, in post_request
+    return self.request("POST", url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 229, in request
+    raise ApiException(http_resp=r)
+linebot.v3.messaging.exceptions.ApiException: (400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'Server': 'legy', 'Content-Type': 'application/json', 'x-content-type-options': 'nosniff', 'x-frame-options': 'DENY', 'x-line-request-id': '894d3f0f-f4cc-4044-8277-c6ff6c4d2595', 'x-xss-protection': '1; mode=block', 'Content-Length': '33', 'Expires': 'Tue, 27 May 2025 11:02:48 GMT', 'Cache-Control': 'max-age=0, no-cache, no-store', 'Pragma': 'no-cache', 'Date': 'Tue, 27 May 2025 11:02:48 GMT', 'Connection': 'close'})
+HTTP response body: {"message":"Invalid reply token"}
+
+[2025-05-27 12:03:46,274] INFO in app: Request body: {"destination":"U54620d6698aac2f4e353c38b1559cc2b","events":[{"type":"message","message":{"type":"text","id":"562895147172888747","quoteToken":"RLO7VAIsw_C4xyz3N7szQpLMU7htAmQtIp0ZNteFdXQ1JWIy28WSC-jC1lZVr_LUczLd49UwJdMWBeLzypciRg0okte5BgN_QWX33is1kPB4Gi-FHNqcE8QkFPYpXxYwRHR2eJGIkzRq7lAKHO6RZw","text":"475387"},"webhookEventId":"01JW8NRSC5FVG4ECH754DK5WBT","deliveryContext":{"isRedelivery":true},"timestamp":1748342956938,"source":{"type":"user","userId":"U4392235d6c87786e9f8e4ab1cec26d28"},"replyToken":"c6e423ab4490442cb1b91ec15e71f54e","mode":"active"}]}
+127.0.0.1 - - [27/May/2025 12:03:49] "[35m[1mPOST /find_product HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2548, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 89, in find_product
+    handler.handle(body, signature)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 227, in handle
+    self.__invoke_func(func, event, payload)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/webhook.py", line 239, in __invoke_func
+    func(event)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/app.py", line 111, in message_text
+    reply_message(result, event, line_bot_api)
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/reply.py", line 50, in reply_message
+    line_bot_api.reply_message_with_http_info(
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 40, in wrapper_function
+    return vd.call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 134, in call
+    return self.execute(m)
+           ^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/pydantic/v1/decorator.py", line 206, in execute
+    return self.raw_function(**d, **var_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api/messaging_api.py", line 7048, in reply_message_with_http_info
+    return self.api_client.call_api(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 407, in call_api
+    return self.__call_api(resource_path, method,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 222, in __call_api
+    raise e
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 212, in __call_api
+    response_data = self.request(
+                    ^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/api_client.py", line 451, in request
+    return self.rest_client.post_request(url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 270, in post_request
+    return self.request("POST", url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wenshinluo/Documents/GitHub/linebot-uniqloJP-price/.venv/lib/python3.12/site-packages/linebot/v3/messaging/rest.py", line 229, in request
+    raise ApiException(http_resp=r)
+linebot.v3.messaging.exceptions.ApiException: (400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'Server': 'legy', 'Content-Type': 'application/json', 'x-content-type-options': 'nosniff', 'x-frame-options': 'DENY', 'x-line-request-id': '74cb196b-2547-43af-aecc-e5f0e13519f9', 'x-xss-protection': '1; mode=block', 'Content-Length': '33', 'Expires': 'Tue, 27 May 2025 11:03:49 GMT', 'Cache-Control': 'max-age=0, no-cache, no-store', 'Pragma': 'no-cache', 'Date': 'Tue, 27 May 2025 11:03:49 GMT', 'Connection': 'close'})
+HTTP response body: {"message":"Invalid reply token"}
+
+[2025-05-27 12:04:48,383] INFO in app: Request body: {"destination":"U54620d6698aac2f4e353c38b1559cc2b","events":[{"type":"message","message":{"type":"text","id":"562895147172888747","quoteToken":"RLO7VAIsw_C4xyz3N7szQpLMU7htAmQtIp0ZNteFdXQ1JWIy28WSC-jC1lZVr_LUczLd49UwJdMWBeLzypciRg0okte5BgN_QWX33is1kPB4Gi-FHNqcE8QkFPYpXxYwRHR2eJGIkzRq7lAKHO6RZw","text":"475387"},"webhookEventId":"01JW8NRSC5FVG4ECH754DK5WBT","deliveryContext":{"isRedelivery":true},"timestamp":1748342956938,"source":{"type":"user","userId":"U4392235d6c87786e9f8e4ab1cec26d28"},"replyToken":"c6e423ab4490442cb1b91ec15e71f54e","mode":"active"}]}
+127.0.0.1 - - [27/May/2025 12:04:51] "[35m[1mPOST /find_product HTTP/1.1[0m" 500 -
+127.0.0.1 - - [27/May/2025 13:40:18] "GET / HTTP/1.1" 200 -
