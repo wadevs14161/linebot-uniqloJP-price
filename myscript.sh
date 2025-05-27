@@ -10,3 +10,6 @@ source venv/bin/activate
 
 # Start flask app in the background using cmd "nohup python app.py &"
 nohup python app.py &
+
+# Ngrok command to expose the local server
+nohup ngrok http 5000 &
