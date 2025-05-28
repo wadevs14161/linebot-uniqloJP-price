@@ -81,33 +81,6 @@ def product_crawl(serial_number):
                 # Execute product_crawl again with the new serial number
                 print(f"Found alternative serial number: {serial_number}")
                 return product_crawl(serial_number)
-                # product_url = base_url + serial_number
-                # price_jp = item['prices']['base']['value']
-
-                # rate = fetch_exchange_rate()
-                # jp_price_in_twd = round(price_jp * rate) if rate else 0
-
-                # uq_url = f"https://uq.goodjack.tw/search?query={serial_alt}"
-                # tw_code = requests.get(uq_url).url[-14:]
-                # tw_api_url = f"https://d.uniqlo.com/tw/p/product/i/product/spu/pc/query/{tw_code}/zh_TW"
-                # headers = {'User-Agent': 'Mozilla/5.0'}
-                # tw_resp = requests.get(tw_api_url, headers=headers).json()
-
-                # if tw_resp.get('success'):
-                #     summary = tw_resp['resp'][0]['summary']
-                #     price_tw = [int(summary['originPrice']), int(summary['minPrice']), int(summary['maxPrice'])]
-                # else:
-                #     price_tw = []
-
-                # product_all_info.update({
-                #     "serial_number": serial_number,
-                #     "product_url": product_url,
-                #     "price_jp": price_jp,
-                #     "jp_price_in_twd": jp_price_in_twd,
-                #     "price_tw": price_tw
-                # })
-
-                return product_all_info
         except Exception:
             return -1
 
