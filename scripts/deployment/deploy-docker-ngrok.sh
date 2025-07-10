@@ -4,7 +4,7 @@
 echo "🐳 Building and starting Docker containers with nginx reverse proxy..."
 
 # Build and start containers
-docker-compose up --build -d
+docker-compose -f ../../docker/docker-compose.yml up --build -d
 
 echo "✅ Docker containers are running!"
 echo "� All services accessible through: http://localhost:8080"

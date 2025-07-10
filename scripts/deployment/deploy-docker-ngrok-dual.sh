@@ -4,7 +4,7 @@
 echo "🐳 Building and starting Docker containers (development mode)..."
 
 # Build and start containers with individual ports
-docker-compose -f docker-compose.dev.yml up --build -d
+docker-compose -f ../../docker/docker-compose.dev.yml up --build -d
 
 echo "✅ Docker containers are running!"
 echo "📡 Backend: http://localhost:5000"

@@ -3,20 +3,22 @@ version: '3.8'
 services:
   backend:
     build:
-      context: .
-      dockerfile: Dockerfile.backend
+      context: ..
+      dockerfile: docker/Dockerfile.backend
     environment:
       - LINE_CHANNEL_SECRET=${LINE_CHANNEL_SECRET}
       - LINE_CHANNEL_ACCESS_TOKEN=${LINE_CHANNEL_ACCESS_TOKEN}
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY:-uniqlo-price-finder-secret-key-2024}
     volumes:
-      - .:/app
+      - ..:/app
+      - ../data:/app/data  # Persist SQLite database
     networks:
       - uniqlo-network
     restart: unless-stopped
 
   frontend:
     build:
-      context: ./frontend
+      context: ../frontend
       dockerfile: Dockerfile
     depends_on:
       - backend

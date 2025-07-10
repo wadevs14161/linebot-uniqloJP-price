@@ -1,6 +1,10 @@
 import os
 import sys
-from flask import (Flask, render_template, request, abort, jsonify)
+import sqlite3
+import uuid
+import hashlib
+from datetime import datetime
+from flask import (Flask, render_template, request, abort, jsonify, session)
 from flask_cors import CORS
 from linebot.v3 import (
     WebhookParser,
@@ -28,7 +32,147 @@ from reply import reply_message
 
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app, supports_credentials=True)  # Enable CORS with credentials for sessions
+app.secret_key = os.getenv('FLASK_SECRET_KEY', 'uniqlo-price-finder-secret-key-2024')
+
+# Database initialization
+def init_db():
+    """Initialize the SQLite database"""
+    # Create data directory if it doesn't exist
+    os.makedirs('data', exist_ok=True)
+    
+    conn = sqlite3.connect('data/search_history.db')
+    cursor = conn.cursor()
+    
+    # Create users table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id TEXT UNIQUE NOT NULL,
+            ip_address TEXT,
+            user_agent TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    
+    # Create search_history table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS search_history (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id TEXT NOT NULL,
+            product_id TEXT NOT NULL,
+            product_name TEXT,
+            price TEXT,
+            colors TEXT,
+            sizes TEXT,
+            image_url TEXT,
+            product_url TEXT,
+            searched_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users (user_id)
+        )
+    ''')
+    
+    conn.commit()
+    conn.close()
+
+def get_user_id():
+    """Get or create a unique user identifier"""
+    # Check if user already has a session
+    if 'user_id' in session:
+        return session['user_id']
+    
+    # Create a new user identifier using IP + User Agent hash
+    ip_address = request.environ.get('HTTP_X_FORWARDED_FOR', request.environ.get('REMOTE_ADDR', ''))
+    user_agent = request.headers.get('User-Agent', '')
+    
+    # Create a hash-based identifier
+    identifier_string = f"{ip_address}:{user_agent}"
+    user_id = hashlib.md5(identifier_string.encode()).hexdigest()[:16]
+    
+    # Store in session
+    session['user_id'] = user_id
+    
+    # Store user info in database
+    conn = sqlite3.connect('data/search_history.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        INSERT OR IGNORE INTO users (user_id, ip_address, user_agent)
+        VALUES (?, ?, ?)
+    ''', (user_id, ip_address, user_agent))
+    conn.commit()
+    conn.close()
+    
+    return user_id
+
+def save_search_to_history(user_id, product_id, result):
+    """Save search result to user's history"""
+    if result == -1 or not result:
+        return
+    
+    conn = sqlite3.connect('data/search_history.db')
+    cursor = conn.cursor()
+    
+    # Extract data from result
+    product_name = ''  # The crawl result doesn't contain product name, could be added later
+    price = f"¥{result.get('price_jp', 0):,}" if result.get('price_jp') else ''
+    
+    # Get unique colors and sizes from product_list
+    colors = []
+    sizes = []
+    if result.get('product_list'):
+        colors = list(set([item['color'] for item in result['product_list'] if item.get('color')]))
+        # Only include sizes for items that have stock "IN_STOCK"
+        sizes = []
+        for item in result['product_list']:
+            if item.get('size') and item.get('stock') == 'IN_STOCK':
+                sizes.append(item['size'])
+        sizes = list(set(sizes))  # Remove duplicates
+    
+    image_url = ''  # Not available in current crawl result
+    product_url = result.get('product_url', '')
+    
+    cursor.execute('''
+        INSERT INTO search_history 
+        (user_id, product_id, product_name, price, colors, sizes, image_url, product_url)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (user_id, product_id, product_name, price, ', '.join(colors), ', '.join(sizes), image_url, product_url))
+    
+    conn.commit()
+    conn.close()
+
+def get_user_search_history(user_id, limit=50):
+    """Get user's search history"""
+    conn = sqlite3.connect('data/search_history.db')
+    cursor = conn.cursor()
+    
+    cursor.execute('''
+        SELECT product_id, product_name, price, colors, sizes, image_url, product_url, searched_at
+        FROM search_history
+        WHERE user_id = ?
+        ORDER BY searched_at DESC
+        LIMIT ?
+    ''', (user_id, limit))
+    
+    results = cursor.fetchall()
+    conn.close()
+    
+    history = []
+    for row in results:
+        history.append({
+            'product_id': row[0],
+            'product_name': row[1],
+            'price': row[2],
+            'colors': row[3].split(', ') if row[3] else [],
+            'sizes': row[4].split(', ') if row[4] else [],
+            'image_url': row[5],
+            'product_url': row[6],
+            'searched_at': row[7]
+        })
+    
+    return history
+
+# Initialize database on startup
+init_db()
 
 # get channel_secret and channel_access_token from your environment variable
 channel_secret = os.getenv('LINE_CHANNEL_SECRET', None)
@@ -170,16 +314,58 @@ def api_search():
         if not product_id:
             return jsonify({'error': 'Product ID is required'}), 400
         
-        print(f"API Search for product ID: {product_id}")
+        # Get user identifier
+        user_id = get_user_id()
+        
+        print(f"API Search for product ID: {product_id} by user: {user_id}")
         result = product_crawl(product_id)
         
         if result == -1:
             return jsonify({'error': 'Product not found'}), 404
         
+        # Save successful search to history
+        save_search_to_history(user_id, product_id, result)
+        
         return jsonify(result)
         
     except Exception as e:
         print(f"API Error: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route("/api/history", methods=['GET'])
+def api_get_history():
+    """API endpoint to get user's search history"""
+    try:
+        user_id = get_user_id()
+        limit = request.args.get('limit', 50, type=int)
+        
+        history = get_user_search_history(user_id, limit)
+        
+        return jsonify({
+            'history': history,
+            'user_id': user_id  # For debugging purposes
+        })
+        
+    except Exception as e:
+        print(f"History API Error: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route("/api/history", methods=['DELETE'])
+def api_clear_history():
+    """API endpoint to clear user's search history"""
+    try:
+        user_id = get_user_id()
+        
+        conn = sqlite3.connect('data/search_history.db')
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM search_history WHERE user_id = ?', (user_id,))
+        conn.commit()
+        conn.close()
+        
+        return jsonify({'message': 'Search history cleared successfully'})
+        
+    except Exception as e:
+        print(f"Clear History API Error: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
 
 # @handler.add(MessageEvent, message=ImageMessageContent)

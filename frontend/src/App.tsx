@@ -21,6 +21,9 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
 
+// Configure axios to always send credentials
+axios.defaults.withCredentials = true;
+
 // Define types for our data structure
 interface ProductVariant {
   serial: string;
@@ -41,14 +44,14 @@ interface ProductInfo {
 }
 
 interface SearchHistoryItem {
-  id: string;
-  productId: string;
-  alternativeProductId: string;
-  productUrl: string;
-  priceJPY: number;
-  priceTWD: number;
-  availableSizes: string;
-  timestamp: Date;
+  product_id: string;
+  product_name: string;
+  price: string;
+  colors: string[];
+  sizes: string[];
+  image_url: string;
+  product_url: string;
+  searched_at: string;
 }
 
 const theme = createTheme({
@@ -68,18 +71,35 @@ function App() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
-  // Load search history from localStorage on component mount
+  // Load search history from backend on component mount
   useEffect(() => {
-    const savedHistory = localStorage.getItem('uniqlo-search-history');
-    if (savedHistory) {
-      setSearchHistory(JSON.parse(savedHistory));
-    }
+    loadSearchHistory();
   }, []);
 
-  // Save search history to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem('uniqlo-search-history', JSON.stringify(searchHistory));
-  }, [searchHistory]);
+  const loadSearchHistory = async () => {
+    try {
+      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || '';
+      const response = await axios.get(`${apiBaseUrl}api/history`, {
+        withCredentials: true // Important for session-based user identification
+      });
+      setSearchHistory(response.data.history || []);
+    } catch (err) {
+      console.error('Failed to load search history:', err);
+    }
+  };
+
+  const clearSearchHistory = async () => {
+    try {
+      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || '';
+      await axios.delete(`${apiBaseUrl}api/history`, {
+        withCredentials: true
+      });
+      setSearchHistory([]);
+    } catch (err) {
+      console.error('Failed to clear search history:', err);
+      setError('Failed to clear search history');
+    }
+  };
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
@@ -95,6 +115,8 @@ function App() {
       const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || '';
       const response = await axios.post(`${apiBaseUrl}api/search`, {
         product_id: searchQuery.trim()
+      }, {
+        withCredentials: true // Important for session-based user identification
       });
 
       const productData: ProductInfo | number = response.data;
@@ -104,35 +126,8 @@ function App() {
         return;
       }
 
-      // Group available sizes by color
-      const availableStock = productData.product_list
-        .filter(item => item.stock > 0)
-        .reduce((acc, item) => {
-          if (!acc[item.color]) {
-            acc[item.color] = [];
-          }
-          acc[item.color].push(item.size);
-          return acc;
-        }, {} as Record<string, string[]>);
-
-      const availableSizesString = Object.entries(availableStock)
-        .map(([color, sizes]) => `${color}: ${sizes.join(', ')}`)
-        .join(' | ');
-
-      // Create new search history item
-      const newHistoryItem: SearchHistoryItem = {
-        id: Date.now().toString(),
-        productId: productData.serial_number,
-        alternativeProductId: productData.product_list[0]?.serial_alt || '',
-        productUrl: productData.product_url,
-        priceJPY: productData.price_jp,
-        priceTWD: productData.jp_price_in_twd,
-        availableSizes: availableSizesString,
-        timestamp: new Date()
-      };
-
-      // Add to history (most recent first)
-      setSearchHistory(prev => [newHistoryItem, ...prev.slice(0, 19)]); // Keep only last 20 searches
+      // Reload search history to include the new search
+      await loadSearchHistory();
       setSearchQuery('');
 
     } catch (err) {
@@ -147,14 +142,6 @@ function App() {
     if (event.key === 'Enter') {
       handleSearch();
     }
-  };
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat().format(price);
-  };
-
-  const formatDate = (date: Date) => {
-    return new Date(date).toLocaleString();
   };
 
   return (
@@ -214,9 +201,22 @@ function App() {
         {/* Search History Table */}
         <Paper elevation={3}>
           <Box sx={{ p: 3 }}>
-            <Typography variant="h5" component="h2" sx={{ mb: 3, fontWeight: 'bold' }}>
-              Search History
-            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+              <Typography variant="h5" component="h2" sx={{ fontWeight: 'bold' }}>
+                Search History
+              </Typography>
+              {searchHistory.length > 0 && (
+                <Button
+                  variant="outlined"
+                  size="small"
+                  color="error"
+                  onClick={clearSearchHistory}
+                  sx={{ fontSize: '0.8rem' }}
+                >
+                  Clear History
+                </Button>
+              )}
+            </Box>
             
             {searchHistory.length === 0 ? (
               <Box sx={{ textAlign: 'center', py: 4 }}>
@@ -230,56 +230,77 @@ function App() {
                   <TableHead>
                     <TableRow>
                       <TableCell sx={{ minWidth: 100 }}><strong>Product ID</strong></TableCell>
-                      <TableCell sx={{ minWidth: 120 }}><strong>Alternative ID</strong></TableCell>
+                      <TableCell sx={{ minWidth: 200 }}><strong>Product Name</strong></TableCell>
                       <TableCell sx={{ minWidth: 120 }}><strong>Product URL</strong></TableCell>
-                      <TableCell align="right" sx={{ minWidth: 100 }}><strong>Price (JPY)</strong></TableCell>
-                      <TableCell align="right" sx={{ minWidth: 100 }}><strong>Price (TWD)</strong></TableCell>
-                      <TableCell sx={{ minWidth: 200 }}><strong>Available Sizes</strong></TableCell>
+                      <TableCell align="right" sx={{ minWidth: 100 }}><strong>Price</strong></TableCell>
+                      <TableCell sx={{ minWidth: 150 }}><strong>Colors</strong></TableCell>
+                      <TableCell sx={{ minWidth: 150 }}><strong>Sizes</strong></TableCell>
                       <TableCell sx={{ minWidth: 140, display: { xs: 'none', md: 'table-cell' } }}><strong>Search Time</strong></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {searchHistory.map((item) => (
-                      <TableRow key={item.id} hover>
+                    {searchHistory.map((item, index) => (
+                      <TableRow key={`${item.product_id}-${index}`} hover>
                         <TableCell>
                           <Typography variant="body2" fontWeight="bold">
-                            {item.productId}
+                            {item.product_id}
                           </Typography>
                         </TableCell>
                         <TableCell>
                           <Typography variant="body2">
-                            {item.alternativeProductId}
+                            {item.product_name || 'N/A'}
                           </Typography>
                         </TableCell>
                         <TableCell>
-                          <Button
-                            variant="text"
-                            size="small"
-                            href={item.productUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            sx={{ fontSize: '0.75rem' }}
-                          >
-                            View
-                          </Button>
-                        </TableCell>
-                        <TableCell align="right">
-                          <Typography variant="body2" fontWeight="bold">
-                            ¥{formatPrice(item.priceJPY)}
-                          </Typography>
+                          {item.product_url ? (
+                            <Button
+                              variant="text"
+                              size="small"
+                              href={item.product_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              sx={{ fontSize: '0.75rem' }}
+                            >
+                              View
+                            </Button>
+                          ) : (
+                            <Typography variant="body2" color="text.secondary">
+                              N/A
+                            </Typography>
+                          )}
                         </TableCell>
                         <TableCell align="right">
                           <Typography variant="body2" fontWeight="bold" color="primary">
-                            NT${formatPrice(item.priceTWD)}
+                            {item.price || 'N/A'}
                           </Typography>
                         </TableCell>
                         <TableCell>
-                          {item.availableSizes ? (
+                          {item.colors && item.colors.length > 0 ? (
                             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                              {item.availableSizes.split(' | ').map((sizeInfo, index) => (
+                              {item.colors.map((color, colorIndex) => (
                                 <Chip
-                                  key={index}
-                                  label={sizeInfo}
+                                  key={colorIndex}
+                                  label={color}
+                                  size="small"
+                                  variant="outlined"
+                                  color="info"
+                                  sx={{ fontSize: '0.7rem' }}
+                                />
+                              ))}
+                            </Box>
+                          ) : (
+                            <Typography variant="body2" color="text.secondary">
+                              N/A
+                            </Typography>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {item.sizes && item.sizes.length > 0 ? (
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                              {item.sizes.map((size, sizeIndex) => (
+                                <Chip
+                                  key={sizeIndex}
+                                  label={size}
                                   size="small"
                                   variant="outlined"
                                   color="success"
@@ -288,12 +309,14 @@ function App() {
                               ))}
                             </Box>
                           ) : (
-                            <Chip label="Out of Stock" size="small" color="error" />
+                            <Typography variant="body2" color="text.secondary">
+                              N/A
+                            </Typography>
                           )}
                         </TableCell>
                         <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>
                           <Typography variant="body2" color="text.secondary">
-                            {formatDate(item.timestamp)}
+                            {new Date(item.searched_at).toLocaleString()}
                           </Typography>
                         </TableCell>
                       </TableRow>

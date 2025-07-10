@@ -7,16 +7,20 @@ A comprehensive solution for finding Uniqlo Japan product prices and stock avail
 - 💰 Real-time price conversion from JPY to TWD
 - 📦 Stock availability by color and size
 - 🤖 Line Bot integration for mobile convenience
-- 🌐 Modern React web interface with search history
-- 📊 Persistent search history using local storage
+- 🌐 Modern React web interface with responsive design
+- 💾 **SQLite3 database integration** for persistent search history
+- � **Smart user identification** via sessions and device fingerprinting
+- 📊 User-specific search history with clear history option
 
 ## Tech Stack
 
 ### Backend
 - Python 3.12
 - Flask (REST API & Line Bot webhook)
+- **SQLite3 database** for search history storage
 - BeautifulSoup4 (Web scraping)
 - Line Bot SDK v3
+- **Session-based user identification**
 
 ### Frontend
 - React 18 with TypeScript
@@ -87,19 +91,19 @@ npm run dev
 
 #### Quick Start with Docker + ngrok
 
-1. **Automated deployment:**
+1. **Simple deployment (recommended):**
 ```bash
-./deploy-docker-ngrok.sh
+./deploy.sh
 ```
 
-2. **Manual deployment:**
+2. **Manual single tunnel deployment:**
 ```bash
-# Build and start containers
-docker-compose up --build -d
+./scripts/deployment/deploy-docker-ngrok.sh
+```
 
-# Start ngrok tunnels (in separate terminals)
-ngrok http 5000  # Backend
-ngrok http 3000  # Frontend
+3. **Manual dual tunnel deployment:**
+```bash
+./scripts/deployment/deploy-docker-ngrok-dual.sh
 ```
 
 #### Benefits of Docker Deployment:
@@ -109,7 +113,7 @@ ngrok http 3000  # Frontend
 - ✅ Production-ready setup
 - ✅ Quick deployment with ngrok for external access
 
-For detailed Docker deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
+For detailed Docker deployment instructions, see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 ## Usage
 
@@ -141,34 +145,75 @@ For detailed Docker deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
 
 ## API Endpoints
 
-- `GET /` - Main page with links to web interface
-- `POST /find_product` - Line Bot webhook endpoint
-- `POST /api/search` - REST API for product search
+- Line Bot webhook: `/find_product` (POST)
+- Web interface search: `POST /api/search` - REST API for product search
+- **Search history**: `GET /api/history` - Get user's search history
+- **Clear history**: `DELETE /api/history` - Clear user's search history
+
+## Database
+
+The application uses SQLite3 for storing user search history:
+- Database file: `data/search_history.db` (auto-created)
+- User identification via sessions and device fingerprinting
+- Persistent search history across browser sessions
+- Privacy-focused: no personal data stored
+
+For detailed information about the database integration, see [`docs/SQLITE-INTEGRATION.md`](docs/SQLITE-INTEGRATION.md).
 
 ## Project Structure
 
 ```
 linebot-uniqloJP-price/
-├── frontend/                 # React TypeScript frontend
+├── 📁 frontend/                    # React TypeScript frontend
 │   ├── src/
-│   │   ├── App.tsx          # Main React component
-│   │   └── main.tsx         # App entry point
+│   │   ├── App.tsx                # Main React component
+│   │   └── main.tsx               # App entry point
 │   ├── package.json
-│   └── README.md
-├── app.py                   # Flask server & Line Bot
-├── crawl.py                 # Web scraping logic
-├── reply.py                 # Line Bot response formatting
-├── requirements.txt         # Python dependencies
-└── README.md               # This file
+│   └── Dockerfile
+├── 📁 docker/                     # Docker configuration
+│   ├── docker-compose.yml        # Production setup with nginx
+│   ├── docker-compose.dev.yml    # Development setup (dual ports)
+│   ├── Dockerfile.backend        # Backend container
+│   └── nginx.conf                # Nginx reverse proxy config
+├── 📁 scripts/                   # Automation scripts
+│   ├── deployment/               # Deployment scripts
+│   │   ├── deploy-docker-ngrok.sh       # Single ngrok tunnel
+│   │   └── deploy-docker-ngrok-dual.sh  # Dual ngrok tunnels
+│   └── testing/                  # Test scripts
+│       └── test-sqlite-integration.sh   # SQLite API tests
+├── 📁 docs/                      # Documentation
+│   ├── DEPLOYMENT.md             # Deployment guide
+│   ├── SQLITE-INTEGRATION.md     # Database integration guide
+│   └── NGROK-COMPARISON.md       # Ngrok setup comparison
+├── 📁 data/                      # Database storage (auto-created)
+│   └── search_history.db         # SQLite database
+├── 📁 static/                    # Static assets for Line Bot
+├── app.py                        # Flask server & Line Bot
+├── crawl.py                      # Web scraping logic
+├── reply.py                      # Line Bot response formatting
+├── requirements.txt              # Python dependencies
+├── deploy.sh                     # Main deployment script
+├── test.sh                       # Comprehensive test script
+└── README.md                     # This file
 ```
 
 ## Development
+
+### Quick Testing
+```bash
+./test.sh  # Run comprehensive test suite
+```
 
 ### Running Both Services
 1. Start backend: `python app.py` (port 5000)
 2. Start frontend: `cd frontend && npm run dev` (port 5173)
 3. Access web interface: `http://localhost:5173`
 4. Access backend: `http://localhost:5000`
+
+### Running with Docker
+```bash
+./deploy.sh  # Interactive deployment script
+```
 
 ### ngrok Setup (for Line Bot)
 ```bash

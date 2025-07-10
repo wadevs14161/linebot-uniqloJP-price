@@ -136,3 +136,15 @@ dockerfile
 
 # test files
 testCrawl.py
+
+# SQLite database files
+data/
+*.db
+*.sqlite3
+
+# Temporary files
+*.txt
+cookies*.txt
+test_cookies.txt
+nohup.out
+.DS_Store
