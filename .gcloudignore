@@ -1,0 +1,52 @@
+# Ignore files for Cloud Run deployment
+.git/
+.github/
+.gitignore
+.dockerignore
+.DS_Store
+.env
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+.mypy_cache/
+
+# Development files
+frontend/
+docker/
+scripts/
+docs/
+static/
+
+# Temporary files
+*.log
+nohup.out
+cookies*.txt
+test_cookies.txt
+
+# Database files (will be created at runtime)
+data/
+*.db
+*.sqlite3
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node modules (if any)
+node_modules/
+npm-debug.log
+
+# OS generated files
+Thumbs.db
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db

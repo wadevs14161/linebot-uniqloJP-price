@@ -4,7 +4,7 @@ import sqlite3
 import uuid
 import hashlib
 from datetime import datetime
-from flask import (Flask, render_template, request, abort, jsonify, session)
+from flask import (Flask, render_template, request, abort, jsonify, session, send_from_directory, send_file)
 from flask_cors import CORS
 from linebot.v3 import (
     WebhookParser,
@@ -32,7 +32,9 @@ from reply import reply_message
 
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)  # Enable CORS with credentials for sessions
+# Configure CORS for production deployment
+cors_origins = ["*"]  # In production, specify your actual frontend domain
+CORS(app, supports_credentials=True, origins=cors_origins)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'uniqlo-price-finder-secret-key-2024')
 
 # Database initialization
@@ -253,12 +255,13 @@ def index():
                 <h1>UNIQLO 日本 找價格</h1>
                 <p class="subtitle">Line Bot Server & Web Interface</p>
                 <div>
-                    <a href="http://localhost:5173" class="button" target="_blank">
+                    <a href="/frontend" class="button" target="_blank">
                         🌐 Open Web Interface
                     </a>
                     <div style="margin-top: 1rem; font-size: 0.9em; opacity: 0.8;">
-                        <p>Web Interface: Product search with history</p>
+                        <p>Backend API: REST endpoints for product search</p>
                         <p>Line Bot: Webhook endpoint for Line messaging</p>
+                        <p>Frontend: Available at /frontend (if served)</p>
                     </div>
                 </div>
             </div>
@@ -368,6 +371,25 @@ def api_clear_history():
         print(f"Clear History API Error: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
 
+# Frontend routes - serve React app
+@app.route('/frontend')
+@app.route('/frontend/')
+def frontend_home():
+    """Serve the React frontend index.html"""
+    try:
+        return send_file('static/frontend/index.html')
+    except FileNotFoundError:
+        return jsonify({'error': 'Frontend not built. Please build the React app first.'}), 404
+
+@app.route('/frontend/<path:filename>')
+def frontend_assets(filename):
+    """Serve React frontend static assets"""
+    try:
+        return send_from_directory('static/frontend', filename)
+    except FileNotFoundError:
+        # If file not found, serve index.html for client-side routing
+        return send_file('static/frontend/index.html')
+
 # @handler.add(MessageEvent, message=ImageMessageContent)
 # def message_image(event):
 #     with ApiClient(configuration) as api_client:
@@ -392,5 +414,7 @@ def api_clear_history():
 #     return "OK"
 
 if __name__ == '__main__':
-    # Running on port 5000, let nginx (port 8080) to proxy to this port
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # Get port from environment variable (Cloud Run sets PORT automatically)
+    port = int(os.getenv('PORT', 5000))
+    # Cloud Run expects the app to bind to 0.0.0.0
+    app.run(debug=False, host='0.0.0.0', port=port)

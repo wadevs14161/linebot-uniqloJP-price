@@ -10,8 +10,9 @@ echo "Please choose your deployment method:"
 echo "1) Single ngrok tunnel (Recommended - all services through nginx)"
 echo "2) Dual ngrok tunnels (Separate tunnels for backend and frontend)"
 echo "3) Local development only (no ngrok)"
+echo "4) Google Cloud Run (Production deployment)"
 echo ""
-read -p "Enter your choice (1-3): " choice
+read -p "Enter your choice (1-4): " choice
 
 case $choice in
     1)
@@ -30,8 +31,12 @@ case $choice in
         echo "🌐 Frontend: http://localhost:8080"
         echo "📡 Backend API: http://localhost:8080/api/"
         ;;
+    4)
+        echo "🌟 Starting Google Cloud Run deployment..."
+        ./scripts/cloud/deploy-cloudrun.sh
+        ;;
     *)
-        echo "❌ Invalid choice. Please run the script again and choose 1, 2, or 3."
+        echo "❌ Invalid choice. Please run the script again and choose 1, 2, 3, or 4."
         exit 1
         ;;
 esac

@@ -94,6 +94,7 @@ npm run dev
 1. **Simple deployment (recommended):**
 ```bash
 ./deploy.sh
+# Choose option 1-4 based on your needs
 ```
 
 2. **Manual single tunnel deployment:**
@@ -106,6 +107,25 @@ npm run dev
 ./scripts/deployment/deploy-docker-ngrok-dual.sh
 ```
 
+### Option 3: Google Cloud Run (Production)
+
+Deploy to Google Cloud Platform for production use:
+
+```bash
+./deploy.sh
+# Choose option 4: Google Cloud Run
+
+# Or deploy directly:
+./scripts/cloud/deploy-cloudrun.sh
+```
+
+**Benefits of Cloud Run:**
+- ✅ Serverless - scales to zero when not in use
+- ✅ Global accessibility via HTTPS
+- ✅ Automatic SSL certificates
+- ✅ Pay only for actual usage
+- ✅ Built-in monitoring and logging
+
 #### Benefits of Docker Deployment:
 - ✅ Consistent environment across different machines
 - ✅ Easy scaling and management
@@ -113,7 +133,31 @@ npm run dev
 - ✅ Production-ready setup
 - ✅ Quick deployment with ngrok for external access
 
-For detailed Docker deployment instructions, see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+For detailed Docker deployment instructions, see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).  
+For Google Cloud Run deployment, see [docs/CLOUDRUN-DEPLOYMENT.md](docs/CLOUDRUN-DEPLOYMENT.md).
+
+### Option 3: Google Cloud Run (Production Deployment)
+
+Deploy to Google Cloud Platform for scalable, production-ready hosting:
+
+```bash
+# Quick deployment
+./deploy.sh
+# Choose option 4 for Google Cloud Run
+
+# Or use the dedicated script
+./scripts/cloud/deploy-cloudrun.sh
+```
+
+#### Benefits of Cloud Run:
+- ✅ Serverless and fully managed
+- ✅ Automatic scaling (0 to many instances)
+- ✅ Pay only for actual usage
+- ✅ Built-in HTTPS and custom domains
+- ✅ Global deployment
+- ✅ No server maintenance required
+
+For detailed Cloud Run deployment instructions, see [docs/CLOUD-RUN-DEPLOYMENT.md](docs/CLOUD-RUN-DEPLOYMENT.md).
 
 ## Usage
 
@@ -179,10 +223,15 @@ linebot-uniqloJP-price/
 │   ├── deployment/               # Deployment scripts
 │   │   ├── deploy-docker-ngrok.sh       # Single ngrok tunnel
 │   │   └── deploy-docker-ngrok-dual.sh  # Dual ngrok tunnels
+│   ├── cloud/                    # Cloud deployment scripts
+│   │   ├── deploy-cloudrun.sh    # GCP Cloud Run deployment
+│   │   ├── build-and-push.sh     # Build and push to Artifact Registry
+│   │   └── test-cloudrun-config.sh      # Test Cloud Run setup
 │   └── testing/                  # Test scripts
 │       └── test-sqlite-integration.sh   # SQLite API tests
 ├── 📁 docs/                      # Documentation
 │   ├── DEPLOYMENT.md             # Deployment guide
+│   ├── CLOUDRUN-DEPLOYMENT.md   # Google Cloud Run deployment
 │   ├── SQLITE-INTEGRATION.md     # Database integration guide
 │   └── NGROK-COMPARISON.md       # Ngrok setup comparison
 ├── 📁 data/                      # Database storage (auto-created)
@@ -194,6 +243,9 @@ linebot-uniqloJP-price/
 ├── requirements.txt              # Python dependencies
 ├── deploy.sh                     # Main deployment script
 ├── test.sh                       # Comprehensive test script
+├── Dockerfile.cloudrun           # Cloud Run optimized Dockerfile
+├── cloudrun-service.yaml         # Cloud Run service configuration
+├── .gcloudignore                 # Cloud deployment ignore rules
 └── README.md                     # This file
 ```
 
