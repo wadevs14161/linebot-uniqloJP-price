@@ -1,6 +1,7 @@
 import os
 import sys
-from flask import (Flask, render_template, request, abort)
+from flask import (Flask, render_template, request, abort, jsonify)
+from flask_cors import CORS
 from linebot.v3 import (
     WebhookParser,
     WebhookHandler
@@ -27,6 +28,7 @@ from reply import reply_message
 
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # get channel_secret and channel_access_token from your environment variable
 channel_secret = os.getenv('LINE_CHANNEL_SECRET', None)
@@ -51,25 +53,71 @@ def index():
     return '''
     <html>
         <head>
-            <title>Line Bot Server</title>
+            <title>Uniqlo Japan Price Finder</title>
             <style>
                 body {
                     display: flex;
+                    flex-direction: column;
                     justify-content: center;
                     align-items: center;
                     height: 100vh;
                     margin: 0;
                     font-family: Arial, sans-serif;
-                    background-color: #f9f9f9;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                }
+                .container {
+                    text-align: center;
+                    background: rgba(255, 255, 255, 0.1);
+                    padding: 2rem;
+                    border-radius: 15px;
+                    backdrop-filter: blur(10px);
+                    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
                 }
                 h1 {
                     font-size: 3em;
-                    color: #333;
+                    margin-bottom: 1rem;
+                }
+                .subtitle {
+                    font-size: 1.2em;
+                    margin-bottom: 2rem;
+                    opacity: 0.9;
+                }
+                .button {
+                    display: inline-block;
+                    padding: 15px 30px;
+                    margin: 10px;
+                    background: rgba(255, 255, 255, 0.2);
+                    border: 2px solid rgba(255, 255, 255, 0.3);
+                    border-radius: 10px;
+                    color: white;
+                    text-decoration: none;
+                    font-size: 1.1em;
+                    transition: all 0.3s ease;
+                }
+                .button:hover {
+                    background: rgba(255, 255, 255, 0.3);
+                    transform: translateY(-2px);
+                }
+                .flag {
+                    font-size: 2em;
                 }
             </style>
         </head>
         <body>
-            <h1>You reached line bot server</h1>
+            <div class="container">
+                <h1>UNIQLO 日本 找價格</h1>
+                <p class="subtitle">Line Bot Server & Web Interface</p>
+                <div>
+                    <a href="http://localhost:5173" class="button" target="_blank">
+                        🌐 Open Web Interface
+                    </a>
+                    <div style="margin-top: 1rem; font-size: 0.9em; opacity: 0.8;">
+                        <p>Web Interface: Product search with history</p>
+                        <p>Line Bot: Webhook endpoint for Line messaging</p>
+                    </div>
+                </div>
+            </div>
         </body>
     </html>
     '''
@@ -111,6 +159,28 @@ def message_text(event):
             reply_message(result, event, line_bot_api)
                     
     return 'OK'
+
+@app.route("/api/search", methods=['POST'])
+def api_search():
+    """API endpoint for product search from React frontend"""
+    try:
+        data = request.get_json()
+        product_id = data.get('product_id', '').strip()
+        
+        if not product_id:
+            return jsonify({'error': 'Product ID is required'}), 400
+        
+        print(f"API Search for product ID: {product_id}")
+        result = product_crawl(product_id)
+        
+        if result == -1:
+            return jsonify({'error': 'Product not found'}), 404
+        
+        return jsonify(result)
+        
+    except Exception as e:
+        print(f"API Error: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
 
 # @handler.add(MessageEvent, message=ImageMessageContent)
 # def message_image(event):

@@ -1,0 +1,25 @@
+# Add to .gitignore
+node_modules/
+.env
+dist/
+build/
+*.log
+.DS_Store
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.coverage
+.pytest_cache/
+htmlcov/
+.idea/
+.vscode/
+*.swp
+*.swo
+*~

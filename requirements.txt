@@ -9,6 +9,7 @@ charset-normalizer==3.3.2
 click==8.1.7
 Deprecated==1.2.14
 Flask==2.2.2
+flask-cors==6.0.1
 frozenlist==1.4.1
 future==1.0.0
 gunicorn==21.2.0
