@@ -1,8 +1,6 @@
 import os
 import sys
-import uuid
 import hashlib
-from datetime import datetime
 from flask import (Flask, render_template, request, abort, jsonify, session, send_from_directory, send_file)
 from flask_cors import CORS
 from linebot.v3 import (
