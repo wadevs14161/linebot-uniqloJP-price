@@ -159,7 +159,14 @@ function App() {
               fontSize: { xs: '1.8rem', sm: '2.5rem', md: '3rem' }
             }}
           >
-            UNIQLO 日本 🔴
+            <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 1 }}>
+              UNIQLO 日本
+              <img 
+                src="/frontend/uniqlo-jp-icon.png" 
+                alt="UNIQLO JP" 
+                style={{ width: '40px', height: '40px', objectFit: 'contain' }}
+              />
+            </Box>
           </Typography>
           <Typography variant="h6" color="text.secondary" sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}>
             Search for product prices and stock availability

@@ -33,3 +33,8 @@ urllib3==2.2.1
 Werkzeug==2.2.2
 wrapt==1.16.0
 yarl==1.9.4
+
+# Database dependencies
+psycopg2-binary==2.9.9
+SQLAlchemy==2.0.30
+python-dotenv==1.0.1

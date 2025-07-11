@@ -137,10 +137,13 @@ dockerfile
 # test files
 testCrawl.py
 
-# SQLite database files
+# Database files and configuration
 data/
 *.db
 *.sqlite3
+.env.database
+.env.local
+.env.*.local
 
 # Temporary files
 *.txt

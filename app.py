@@ -1,6 +1,5 @@
 import os
 import sys
-import sqlite3
 import uuid
 import hashlib
 from datetime import datetime
@@ -28,6 +27,7 @@ from linebot.v3.messaging import (
 )
 
 from crawl import product_crawl
+from database import db_manager
 from reply import reply_message
 
 
@@ -39,43 +39,10 @@ app.secret_key = os.getenv('FLASK_SECRET_KEY', 'uniqlo-price-finder-secret-key-2
 
 # Database initialization
 def init_db():
-    """Initialize the SQLite database"""
-    # Create data directory if it doesn't exist
-    os.makedirs('data', exist_ok=True)
-    
-    conn = sqlite3.connect('data/search_history.db')
-    cursor = conn.cursor()
-    
-    # Create users table
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_id TEXT UNIQUE NOT NULL,
-            ip_address TEXT,
-            user_agent TEXT,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    ''')
-    
-    # Create search_history table
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS search_history (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_id TEXT NOT NULL,
-            product_id TEXT NOT NULL,
-            product_name TEXT,
-            price TEXT,
-            colors TEXT,
-            sizes TEXT,
-            image_url TEXT,
-            product_url TEXT,
-            searched_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (user_id) REFERENCES users (user_id)
-        )
-    ''')
-    
-    conn.commit()
-    conn.close()
+    """Initialize the database - now handled by DatabaseManager"""
+    # Database initialization is now handled by the DatabaseManager
+    # This function is kept for compatibility but does nothing
+    pass
 
 def get_user_id():
     """Get or create a unique user identifier"""
@@ -94,84 +61,75 @@ def get_user_id():
     # Store in session
     session['user_id'] = user_id
     
-    # Store user info in database
-    conn = sqlite3.connect('data/search_history.db')
-    cursor = conn.cursor()
-    cursor.execute('''
-        INSERT OR IGNORE INTO users (user_id, ip_address, user_agent)
-        VALUES (?, ?, ?)
-    ''', (user_id, ip_address, user_agent))
-    conn.commit()
-    conn.close()
+    # User management is now handled by the database manager
+    # No need to manually store user info
     
     return user_id
 
 def save_search_to_history(user_id, product_id, result):
-    """Save search result to user's history"""
+    """Save search result to user's history using the new database manager"""
     if result == -1 or not result:
+        db_manager.save_search_history(
+            product_id=product_id,
+            search_data={},
+            source='web',
+            user_id=user_id,
+            is_successful=False,
+            error_message="Search failed"
+        )
         return
     
-    conn = sqlite3.connect('data/search_history.db')
-    cursor = conn.cursor()
-    
-    # Extract data from result
-    product_name = ''  # The crawl result doesn't contain product name, could be added later
-    price = f"¥{result.get('price_jp', 0):,}" if result.get('price_jp') else ''
-    
-    # Get unique colors and sizes from product_list
-    colors = []
-    sizes = []
-    if result.get('product_list'):
-        colors = list(set([item['color'] for item in result['product_list'] if item.get('color')]))
-        # Only include sizes for items that have stock "IN_STOCK"
-        sizes = []
-        for item in result['product_list']:
-            if item.get('size') and item.get('stock') == 'IN_STOCK':
-                sizes.append(item['size'])
-        sizes = list(set(sizes))  # Remove duplicates
-    
-    image_url = ''  # Not available in current crawl result
-    product_url = result.get('product_url', '')
-    
-    cursor.execute('''
-        INSERT INTO search_history 
-        (user_id, product_id, product_name, price, colors, sizes, image_url, product_url)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    ''', (user_id, product_id, product_name, price, ', '.join(colors), ', '.join(sizes), image_url, product_url))
-    
-    conn.commit()
-    conn.close()
+    # Save successful search to database
+    db_manager.save_search_history(
+        product_id=product_id,
+        search_data=result,
+        source='web',
+        user_id=user_id,
+        is_successful=True
+    )
 
 def get_user_search_history(user_id, limit=50):
-    """Get user's search history"""
-    conn = sqlite3.connect('data/search_history.db')
-    cursor = conn.cursor()
-    
-    cursor.execute('''
-        SELECT product_id, product_name, price, colors, sizes, image_url, product_url, searched_at
-        FROM search_history
-        WHERE user_id = ?
-        ORDER BY searched_at DESC
-        LIMIT ?
-    ''', (user_id, limit))
-    
-    results = cursor.fetchall()
-    conn.close()
-    
-    history = []
-    for row in results:
-        history.append({
-            'product_id': row[0],
-            'product_name': row[1],
-            'price': row[2],
-            'colors': row[3].split(', ') if row[3] else [],
-            'sizes': row[4].split(', ') if row[4] else [],
-            'image_url': row[5],
-            'product_url': row[6],
-            'searched_at': row[7]
-        })
-    
-    return history
+    """Get user's search history using the new database manager"""
+    try:
+        with db_manager.get_session() as session:
+            from database import SearchHistory
+            
+            # Get recent searches for this user
+            searches = session.query(SearchHistory).filter(
+                SearchHistory.user_id == user_id,
+                SearchHistory.is_successful == True
+            ).order_by(SearchHistory.search_timestamp.desc()).limit(limit).all()
+            
+            history = []
+            for search in searches:
+                # Extract data from stored JSON
+                data = search.product_data or {}
+                colors = []
+                sizes = []
+                
+                if data.get('product_list'):
+                    colors = list(set([item['color'] for item in data['product_list'] if item.get('color')]))
+                    sizes = []
+                    for item in data['product_list']:
+                        if item.get('size') and item.get('stock') == 'IN_STOCK':
+                            sizes.append(item['size'])
+                    sizes = list(set(sizes))
+                
+                history.append({
+                    'product_id': search.product_id,
+                    'product_name': '',  # Not stored separately anymore
+                    'price': f"¥{search.jp_price:,}" if search.jp_price else '',
+                    'colors': colors,
+                    'sizes': sizes,
+                    'image_url': '',  # Not available
+                    'product_url': search.product_url or '',
+                    'searched_at': search.search_timestamp.isoformat()
+                })
+            
+            return history
+    except Exception as e:
+        print(f"Error getting search history: {e}")
+        return []
 
 # Initialize database on startup
 init_db()
@@ -309,7 +267,7 @@ def message_text(event):
 
 @app.route("/api/search", methods=['POST'])
 def api_search():
-    """API endpoint for product search from React frontend"""
+    """API endpoint for product search from React frontend with caching"""
     try:
         data = request.get_json()
         product_id = data.get('product_id', '').strip()
@@ -321,10 +279,38 @@ def api_search():
         user_id = get_user_id()
         
         print(f"API Search for product ID: {product_id} by user: {user_id}")
+        
+        # Try to get cached data first
+        cached_result = db_manager.get_cached_price(product_id)
+        if cached_result:
+            print(f"Using cached data for product {product_id}")
+            # Save cache hit to history
+            db_manager.save_search_history(
+                product_id=product_id,
+                search_data=cached_result,
+                source='api_cached',
+                user_id=user_id,
+                is_successful=True
+            )
+            return jsonify(cached_result)
+        
+        # No cache, fetch fresh data
         result = product_crawl(product_id)
         
         if result == -1:
+            # Save failed search
+            db_manager.save_search_history(
+                product_id=product_id,
+                search_data={},
+                source='api',
+                user_id=user_id,
+                is_successful=False,
+                error_message="Product not found"
+            )
             return jsonify({'error': 'Product not found'}), 404
+        
+        # Cache the successful result (1 hour cache)
+        db_manager.cache_price_data(product_id, result, cache_hours=1)
         
         # Save successful search to history
         save_search_to_history(user_id, product_id, result)
@@ -359,16 +345,26 @@ def api_clear_history():
     try:
         user_id = get_user_id()
         
-        conn = sqlite3.connect('data/search_history.db')
-        cursor = conn.cursor()
-        cursor.execute('DELETE FROM search_history WHERE user_id = ?', (user_id,))
-        conn.commit()
-        conn.close()
+        # Clear search history using database manager
+        with db_manager.get_session() as session:
+            from database import SearchHistory
+            session.query(SearchHistory).filter(SearchHistory.user_id == user_id).delete()
+            session.commit()
         
         return jsonify({'message': 'Search history cleared successfully'})
         
     except Exception as e:
         print(f"Clear History API Error: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route("/api/stats", methods=['GET'])
+def api_get_stats():
+    """API endpoint to get database statistics"""
+    try:
+        stats = db_manager.get_search_stats()
+        return jsonify(stats)
+    except Exception as e:
+        print(f"Stats API Error: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
 
 # Frontend routes - serve React app
@@ -390,28 +386,6 @@ def frontend_assets(filename):
         # If file not found, serve index.html for client-side routing
         return send_file('static/frontend/index.html')
 
-# @handler.add(MessageEvent, message=ImageMessageContent)
-# def message_image(event):
-#     with ApiClient(configuration) as api_client:
-#         print("User sent a image!")
-#         line_bot_api = MessagingApi(api_client)
-#         messageId = event.message.id
-#         image_url = upload_image(channel_access_token, messageId)
-
-#         result = analyze(image_url)
-
-#         serial_number = ""
-#         for line in result.read.blocks[0].lines:
-#             if len(line.text) == 10:
-#                 if line.text[-6:].isnumeric():
-#                     serial_number = line.text[-6:]
-#                     print("serial number : " + serial_number)
-
-#         crawlResult = product_crawl(serial_number)
-        
-#         reply_message(crawlResult, event, line_bot_api)
-
-#     return "OK"
 
 if __name__ == '__main__':
     # Get port from environment variable (Cloud Run sets PORT automatically)

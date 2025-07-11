@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  uniqlo-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    ports:
+      - "5000:8080"
+    environment:
+      # Flask configuration
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+      - PORT=8080
+      
+      # Database configuration (loaded from .env.database)
+      - DB_CONNECTION_NAME=${DB_CONNECTION_NAME}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      
+      # Line Bot configuration (if needed)
+      - LINE_CHANNEL_SECRET=${LINE_CHANNEL_SECRET:-}
+      - LINE_CHANNEL_ACCESS_TOKEN=${LINE_CHANNEL_ACCESS_TOKEN:-}
+      
+    volumes:
+      # Mount source code for development (optional)
+      - ./app.py:/app/app.py
+      - ./crawl.py:/app/crawl.py
+      - ./reply.py:/app/reply.py
+      - ./database.py:/app/database.py
+      
+      # Mount data directory for SQLite fallback
+      - ./data:/app/data
+      
+      # Mount Google Cloud credentials (for Cloud SQL access)
+      - ~/.config/gcloud:/root/.config/gcloud:ro
+      
+    depends_on:
+      - db-proxy
+    networks:
+      - uniqlo-network
+
+  # Cloud SQL Proxy as a separate service
+  db-proxy:
+    image: gcr.io/cloudsql-docker/gce-proxy:1.33.2
+    command: >
+      /cloud_sql_proxy
+      -instances=${DB_CONNECTION_NAME}=tcp:0.0.0.0:5432
+      -credential_file=/config/key.json
+    ports:
+      - "5432:5432"
+    volumes:
+      # Mount your service account key
+      # Create this file: gcloud iam service-accounts keys create key.json --iam-account=YOUR_SERVICE_ACCOUNT
+      - ./config/key.json:/config/key.json:ro
+    networks:
+      - uniqlo-network
+    restart: unless-stopped
+
+networks:
+  uniqlo-network:
+    driver: bridge
+
+# Load environment variables from .env.database
+env_file:
+  - .env.database

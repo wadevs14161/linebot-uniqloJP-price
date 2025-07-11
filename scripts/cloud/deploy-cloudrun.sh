@@ -72,9 +72,30 @@ echo "For Line Bot functionality, you need:"
 echo "1. LINE_CHANNEL_SECRET"
 echo "2. LINE_CHANNEL_ACCESS_TOKEN"
 echo ""
+echo "For Database functionality, you need:"
+echo "3. DATABASE_URL (Cloud SQL connection string)"
+echo ""
 
 read -p "Enter LINE_CHANNEL_SECRET (or press Enter to skip): " LINE_CHANNEL_SECRET
 read -p "Enter LINE_CHANNEL_ACCESS_TOKEN (or press Enter to skip): " LINE_CHANNEL_ACCESS_TOKEN
+
+# Check if .env.database exists for database configuration
+if [ -f ".env.database" ]; then
+    echo "📦 Found database configuration file (.env.database)"
+    echo "   Loading database connection settings..."
+    
+    # Source the database environment file to get variables
+    set -a  # automatically export all variables
+    source .env.database
+    set +a
+    
+    echo "   ✅ Database configuration loaded"
+else
+    echo "⚠️  No database configuration found (.env.database)"
+    echo "   Run ./scripts/cloud/setup-database.sh to create a database first"
+    echo "   Application will fall back to SQLite in /data directory"
+    DATABASE_URL=""
+fi
 
 # Build environment variables string
 ENV_VARS=""
@@ -88,8 +109,21 @@ if [ ! -z "$LINE_CHANNEL_ACCESS_TOKEN" ]; then
         ENV_VARS="--set-env-vars=LINE_CHANNEL_ACCESS_TOKEN=$LINE_CHANNEL_ACCESS_TOKEN"
     fi
 fi
+if [ ! -z "$DATABASE_URL" ]; then
+    if [ ! -z "$ENV_VARS" ]; then
+        ENV_VARS="$ENV_VARS,DATABASE_URL=$DATABASE_URL"
+    else
+        ENV_VARS="--set-env-vars=DATABASE_URL=$DATABASE_URL"
+    fi
+fi
 
 # Deploy the service
+CLOUD_SQL_CONNECTIONS=""
+if [ ! -z "$DB_CONNECTION_NAME" ]; then
+    CLOUD_SQL_CONNECTIONS="--add-cloudsql-instances=$DB_CONNECTION_NAME"
+    echo "🔗 Enabling Cloud SQL connection: $DB_CONNECTION_NAME"
+fi
+
 gcloud run deploy $SERVICE_NAME \
     --image=$IMAGE_TAG \
     --platform=managed \
@@ -101,6 +135,7 @@ gcloud run deploy $SERVICE_NAME \
     --min-instances=0 \
     --max-instances=10 \
     --timeout=300 \
+    $CLOUD_SQL_CONNECTIONS \
     $ENV_VARS
 
 # Get the service URL
