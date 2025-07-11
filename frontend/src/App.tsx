@@ -237,7 +237,7 @@ function App() {
                   <TableHead>
                     <TableRow>
                       <TableCell sx={{ minWidth: 100 }}><strong>Product ID</strong></TableCell>
-                      <TableCell sx={{ minWidth: 200 }}><strong>Product Name</strong></TableCell>
+                      <TableCell sx={{ minWidth: 250 }}><strong>Product Title</strong></TableCell>
                       <TableCell sx={{ minWidth: 120 }}><strong>Product URL</strong></TableCell>
                       <TableCell align="right" sx={{ minWidth: 100 }}><strong>Price</strong></TableCell>
                       <TableCell sx={{ minWidth: 150 }}><strong>Colors</strong></TableCell>
@@ -254,7 +254,15 @@ function App() {
                           </Typography>
                         </TableCell>
                         <TableCell>
-                          <Typography variant="body2">
+                          <Typography 
+                            variant="body2"
+                            sx={{ 
+                              wordBreak: 'break-word',
+                              maxWidth: '300px',
+                              fontSize: '0.875rem',
+                              lineHeight: 1.4
+                            }}
+                          >
                             {item.product_name || 'N/A'}
                           </Typography>
                         </TableCell>

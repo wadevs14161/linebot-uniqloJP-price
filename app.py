@@ -35,6 +35,9 @@ cors_origins = ["*"]  # In production, specify your actual frontend domain
 CORS(app, supports_credentials=True, origins=cors_origins)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'uniqlo-price-finder-secret-key-2024')
 
+# Ensure proper JSON encoding for Japanese characters
+app.config['JSON_AS_ASCII'] = False
+
 # Database initialization
 def init_db():
     """Initialize the database - now handled by DatabaseManager"""
@@ -113,9 +116,12 @@ def get_user_search_history(user_id, limit=50):
                             sizes.append(item['size'])
                     sizes = list(set(sizes))
                 
+                # Extract page title from stored JSON data
+                page_title = data.get('page_title', '')
+                
                 history.append({
                     'product_id': search.product_id,
-                    'product_name': '',  # Not stored separately anymore
+                    'product_name': page_title,  # Use the scraped page title
                     'price': f"¥{search.jp_price:,}" if search.jp_price else '',
                     'colors': colors,
                     'sizes': sizes,

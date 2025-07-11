@@ -57,6 +57,7 @@ def product_crawl(serial_number):
     product_all_info = {
         "serial_number": "",
         "product_url": "",
+        "page_title": "",
         "price_jp": 0,
         "jp_price_in_twd": 0,
         "price_tw": [],
@@ -66,6 +67,22 @@ def product_crawl(serial_number):
     base_url = 'https://www.uniqlo.com/jp/ja/products/'
     product_url = base_url + serial_number
     response = requests.get(product_url)
+    
+    # Ensure proper UTF-8 encoding for Japanese characters
+    if response.status_code == 200:
+        response.encoding = 'utf-8'
+
+    # Get the web page title
+    page_title = ""
+    if response.status_code == 200:
+        try:
+            soup = BeautifulSoup(response.text, 'html.parser')
+            title_tag = soup.find('title')
+            if title_tag:
+                page_title = title_tag.get_text().strip()
+                print(f"Page title: {page_title}")
+        except Exception as e:
+            print(f"Error getting page title: {e}")
 
     # Case 1: Product not found on JP site, directly find product on API
     if response.status_code == 404:
@@ -119,6 +136,7 @@ def product_crawl(serial_number):
         product_all_info.update({
             "serial_number": serial_number,
             "product_url": product_url,
+            "page_title": page_title,
             "price_jp": price_jp,
             "jp_price_in_twd": jp_price_in_twd,
             "product_list": product_list
